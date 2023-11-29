@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string Task { get; set; }
-        public bool ToDoStatus { get; set; }
-        public bool InProgressStatus { get; set; }
-        public bool ArchivedStatus { get; set; }
+        public bool ToDo { get; set; }
+        public bool InProgress { get; set; }
+        public bool Archived { get; set; }
     }
 }

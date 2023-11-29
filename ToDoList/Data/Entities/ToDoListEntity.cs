@@ -7,9 +7,9 @@ namespace ToDoList.Data.Entities
     {
         public int Id { get; set; }
         public string Task { get; set; }
-        public bool ToDoStatus { get; set; }
-        public bool InProgressStatus { get; set; }
-        public bool ArchivedStatus { get; set; }
+        public bool ToDo { get; set; }
+        public bool InProgress { get; set; }
+        public bool Archived { get; set; }
     }
 
     public class ToDoListEntityConfiguration : IEntityTypeConfiguration<ToDoListEntity>
@@ -27,15 +27,15 @@ namespace ToDoList.Data.Entities
                 .HasMaxLength(200);
 
             builder
-                .Property(p => p.ToDoStatus)
+                .Property(p => p.ToDo)
                 .HasDefaultValue(true);
 
             builder
-                .Property(p => p.InProgressStatus)
+                .Property(p => p.InProgress)
                 .HasDefaultValue(false);
 
             builder
-                .Property(p => p.ArchivedStatus)
+                .Property(p => p.Archived)
                 .HasDefaultValue(false);
         }
     }
