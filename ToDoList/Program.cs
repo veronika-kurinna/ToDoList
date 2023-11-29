@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ToDoList.Data;
+
 namespace ToDoList
 {
     public class Program
@@ -10,6 +13,15 @@ namespace ToDoList
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddDbContext<ToDoListContext>(options =>
+                options.UseSqlServer(@"Data Source=DESKTOP-PPF02FT\SQLEXPRESS;Initial Catalog=ToDoList;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
+                       .EnableDetailedErrors()
+                       .EnableSensitiveDataLogging()
+                       .LogTo(
+                           Console.WriteLine,
+                           new[] { DbLoggerCategory.Database.Command.Name },
+                           LogLevel.Information));
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
