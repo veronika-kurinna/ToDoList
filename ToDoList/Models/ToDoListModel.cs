@@ -1,6 +1,6 @@
 ﻿namespace ToDoList.Models
 {
-    public class ToDoList
+    public class ToDoListModel
     {
         public int Id { get; set; }
         public string Task { get; set; }
