@@ -1,10 +1,10 @@
-﻿using ToDoList.Dtos.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ToDoList.Dtos.Requests
 {
     public class CreateToDoListRequest
     {
-        [ValidateNotNullOrNotWhiteSpace]
+        [Required]
         public string Task { get; set; }
     }
 }
