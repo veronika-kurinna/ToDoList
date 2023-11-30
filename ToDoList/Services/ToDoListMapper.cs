@@ -7,52 +7,52 @@ namespace ToDoList.Services
 {
     public class ToDoListMapper : IToDoListMapper
     {
-        public ToDoListEntity Map(ToDoListModel toDoList)
+        public ToDoListEntity MapToEntity(ToDoListModel model)
         {
-            ToDoListEntity toDoListEntity = new ToDoListEntity()
+            ToDoListEntity entity = new ToDoListEntity()
             {
-                Id = toDoList.Id,
-                Task = toDoList.Task,
-                ToDo = toDoList.ToDo,
-                InProgress = toDoList.InProgress,
-                Archived = toDoList.Archived
+                Id = model.Id,
+                Task = model.Task,
+                ToDo = model.ToDo,
+                InProgress = model.InProgress,
+                Archived = model.Archived
             };
-            return toDoListEntity;
+            return entity;
         }
 
-        public ToDoListModel Map(ToDoListEntity toDoList)
+        public ToDoListModel MapToModel(ToDoListEntity entity)
         {
-            ToDoListModel toDoListModel = new ToDoListModel()
+            ToDoListModel model = new ToDoListModel()
             {
-                Id = toDoList.Id,
-                Task = toDoList.Task,
-                ToDo = toDoList.ToDo,
-                InProgress = toDoList.InProgress,
-                Archived = toDoList.Archived
+                Id = entity.Id,
+                Task = entity.Task,
+                ToDo = entity.ToDo,
+                InProgress = entity.InProgress,
+                Archived = entity.Archived
             };
-            return toDoListModel;
+            return model;
         }
 
-        public ToDoListDto MapDto(ToDoListModel toDoList)
+        public ToDoListDto MapToDto(ToDoListModel model)
         {
-            ToDoListDto toDoListDto = new ToDoListDto()
+            ToDoListDto dto = new ToDoListDto()
             {
-                Id = toDoList.Id,
-                Task = toDoList.Task,
-                ToDo = toDoList.ToDo,
-                InProgress = toDoList.InProgress,
-                Archived = toDoList.Archived
+                Id = model.Id,
+                Task = model.Task,
+                ToDo = model.ToDo,
+                InProgress = model.InProgress,
+                Archived = model.Archived
             };
-            return toDoListDto;
+            return dto;
         }
 
-        public ToDoListModel Map(CreateToDoListRequest toDoList)
+        public ToDoListModel MapToModel(CreateToDoListRequest request)
         {
-            ToDoListModel toDoListModel = new ToDoListModel()
+            ToDoListModel model = new ToDoListModel()
             {
-                Task = toDoList.Task
+                Task = request.Task
             };
-            return toDoListModel;
+            return model;
         }
     }
 }
