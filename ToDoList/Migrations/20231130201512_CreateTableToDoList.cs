@@ -17,9 +17,7 @@ namespace ToDoList.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Task = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    ToDo = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    InProgress = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    Archived = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {

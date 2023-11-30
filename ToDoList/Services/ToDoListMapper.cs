@@ -13,9 +13,7 @@ namespace ToDoList.Services
             {
                 Id = model.Id,
                 Task = model.Task,
-                ToDo = model.ToDo,
-                InProgress = model.InProgress,
-                Archived = model.Archived
+                Status = model.Status
             };
             return entity;
         }
@@ -26,9 +24,7 @@ namespace ToDoList.Services
             {
                 Id = entity.Id,
                 Task = entity.Task,
-                ToDo = entity.ToDo,
-                InProgress = entity.InProgress,
-                Archived = entity.Archived
+                Status = entity.Status,
             };
             return model;
         }
@@ -39,9 +35,7 @@ namespace ToDoList.Services
             {
                 Id = model.Id,
                 Task = model.Task,
-                ToDo = model.ToDo,
-                InProgress = model.InProgress,
-                Archived = model.Archived
+                Status = model.Status
             };
             return dto;
         }
