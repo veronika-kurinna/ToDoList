@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ToDoList.Data.Entities;
 
 namespace ToDoList.Dtos.Requests
 {
@@ -6,5 +7,6 @@ namespace ToDoList.Dtos.Requests
     {
         [Required]
         public string Task { get; set; }
+        public ToDoItemStatuses Status { get; set; }
     }
 }

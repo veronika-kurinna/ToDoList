@@ -44,7 +44,8 @@ namespace ToDoList.Services
         {
             ToDoListModel model = new ToDoListModel()
             {
-                Task = request.Task
+                Task = request.Task,
+                Status = request.Status
             };
             return model;
         }
