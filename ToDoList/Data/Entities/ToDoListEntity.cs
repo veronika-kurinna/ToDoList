@@ -23,10 +23,6 @@ namespace ToDoList.Data.Entities
             builder
                 .Property(p => p.Task)
                 .HasMaxLength(200);
-
-            builder
-                .Property(p => p.Status)
-                .HasDefaultValue(ToDoItemStatuses.ToDo);
         }
     }
 }

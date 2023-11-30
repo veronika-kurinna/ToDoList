@@ -11,7 +11,7 @@ using ToDoList.Data;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListContext))]
-    [Migration("20231130201512_CreateTableToDoList")]
+    [Migration("20231130204353_CreateTableToDoList")]
     partial class CreateTableToDoList
     {
         /// <inheritdoc />
@@ -33,9 +33,7 @@ namespace ToDoList.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<string>("Task")
                         .IsRequired()
