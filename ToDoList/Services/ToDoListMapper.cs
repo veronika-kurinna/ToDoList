@@ -1,4 +1,6 @@
 ﻿using ToDoList.Data.Entities;
+using ToDoList.Dtos;
+using ToDoList.Dtos.Requests;
 using ToDoList.Models;
 
 namespace ToDoList.Services
@@ -27,6 +29,28 @@ namespace ToDoList.Services
                 ToDo = toDoList.ToDo,
                 InProgress = toDoList.InProgress,
                 Archived = toDoList.Archived
+            };
+            return toDoListModel;
+        }
+
+        public ToDoListDto MapDto(ToDoListModel toDoList)
+        {
+            ToDoListDto toDoListDto = new ToDoListDto()
+            {
+                Id = toDoList.Id,
+                Task = toDoList.Task,
+                ToDo = toDoList.ToDo,
+                InProgress = toDoList.InProgress,
+                Archived = toDoList.Archived
+            };
+            return toDoListDto;
+        }
+
+        public ToDoListModel Map(CreateToDoListRequest toDoList)
+        {
+            ToDoListModel toDoListModel = new ToDoListModel()
+            {
+                Task = toDoList.Task
             };
             return toDoListModel;
         }

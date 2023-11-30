@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Data;
+using ToDoList.Data.Repositories;
+using ToDoList.Services;
 
 namespace ToDoList
 {
@@ -24,6 +26,10 @@ namespace ToDoList
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddTransient<IToDoListService, ToDoListService>();
+            builder.Services.AddTransient<IToDoListRepository, ToDoListRepository>();
+            builder.Services.AddTransient<IToDoListMapper, ToDoListMapper>();
 
             var app = builder.Build();
 
