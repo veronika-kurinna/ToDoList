@@ -39,7 +39,7 @@ namespace ToDoListIntegrationTest
             // Assert
             var context = new ToDoListContext(_factory.Options);
             context.ToDoLists.Should().ContainSingle(e => e.Id == taskId &&
-                                                          e.Task == newTask.Task &&
+                                                          e.Name == newTask.Task &&
                                                           e.Status == newTask.Status);
         }
 
@@ -48,15 +48,15 @@ namespace ToDoListIntegrationTest
         {
             //Arrange
             HttpClient client = _factory.CreateClient();
-            var firstTask = new ToDoListEntity
+            var firstTask = new ToDoListItemEntity
             {
-                Task = "First Task Test",
+                Name = "First Task Test",
                 Status = ToDoItemStatuses.Archived
             };
 
-            var secondTask = new ToDoListEntity
+            var secondTask = new ToDoListItemEntity
             {
-                Task = "Second Task Test",
+                Name = "Second Task Test",
                 Status = ToDoItemStatuses.InProgress
             };
             var context = new ToDoListContext(_factory.Options);
@@ -75,10 +75,10 @@ namespace ToDoListIntegrationTest
 
             //Assert
             getResponseJson.ToDoLists.Should().Satisfy(f => f.Id == firstTask.Id &&
-                                                            f.Task == firstTask.Task &&
+                                                            f.Task == firstTask.Name &&
                                                             f.Status == firstTask.Status,
                                                        s => s.Id == secondTask.Id &&
-                                                            s.Task == secondTask.Task &&
+                                                            s.Task == secondTask.Name &&
                                                             s.Status == secondTask.Status);
         }
     }

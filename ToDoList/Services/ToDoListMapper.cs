@@ -7,23 +7,23 @@ namespace ToDoList.Services
 {
     public class ToDoListMapper : IToDoListMapper
     {
-        public ToDoListEntity MapToEntity(ToDoListModel model)
+        public ToDoListItemEntity MapToEntity(ToDoListModel model)
         {
-            ToDoListEntity entity = new ToDoListEntity()
+            ToDoListItemEntity entity = new ToDoListItemEntity()
             {
                 Id = model.Id,
-                Task = model.Task,
+                Name = model.Task,
                 Status = model.Status
             };
             return entity;
         }
 
-        public ToDoListModel MapToModel(ToDoListEntity entity)
+        public ToDoListModel MapToModel(ToDoListItemEntity entity)
         {
             ToDoListModel model = new ToDoListModel()
             {
                 Id = entity.Id,
-                Task = entity.Task,
+                Task = entity.Name,
                 Status = entity.Status,
             };
             return model;

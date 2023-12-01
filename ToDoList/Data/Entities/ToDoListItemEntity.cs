@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ToDoList.Data.Entities
 {
-    public class ToDoListEntity
+    public class ToDoListItemEntity
     {
         public int Id { get; set; }
-        public string Task { get; set; }
+        public string Name { get; set; }
         public ToDoItemStatuses Status { get; set; }
     }
 
-    public class ToDoListEntityConfiguration : IEntityTypeConfiguration<ToDoListEntity>
+    public class ToDoListEntityConfiguration : IEntityTypeConfiguration<ToDoListItemEntity>
     {
-        public void Configure(EntityTypeBuilder<ToDoListEntity> builder)
+        public void Configure(EntityTypeBuilder<ToDoListItemEntity> builder)
         {
             builder
                 .ToTable("ToDoList");
@@ -21,7 +21,7 @@ namespace ToDoList.Data.Entities
                 .HasKey(k => k.Id);
 
             builder
-                .Property(p => p.Task)
+                .Property(p => p.Name)
                 .HasMaxLength(200);
         }
     }

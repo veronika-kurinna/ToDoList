@@ -7,8 +7,8 @@ namespace ToDoList.Services
 {
     public interface IToDoListMapper
     {
-        ToDoListEntity MapToEntity(ToDoListModel toDoList);
-        ToDoListModel MapToModel(ToDoListEntity toDoList);
+        ToDoListItemEntity MapToEntity(ToDoListModel toDoList);
+        ToDoListModel MapToModel(ToDoListItemEntity toDoList);
         ToDoListModel MapToModel(CreateToDoListRequest toDoList);
         ToDoListDto MapToDto(ToDoListModel toDoList);
     }
