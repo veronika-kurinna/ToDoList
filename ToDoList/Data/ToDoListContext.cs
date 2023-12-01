@@ -10,6 +10,7 @@ namespace ToDoList.Data
         public ToDoListContext(DbContextOptions<ToDoListContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
