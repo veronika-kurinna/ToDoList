@@ -2,6 +2,6 @@
 {
     public class GetToDoListResponse
     {
-        public IEnumerable<ToDoListDto> ToDoLists { get; set; }
+        public IEnumerable<ToDoListItemDto> ToDoListItems { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace ToDoList.Data.Entities
         public ToDoItemStatuses Status { get; set; }
     }
 
-    public class ToDoListEntityConfiguration : IEntityTypeConfiguration<ToDoListItemEntity>
+    public class ToDoListItemEntityConfiguration : IEntityTypeConfiguration<ToDoListItemEntity>
     {
         public void Configure(EntityTypeBuilder<ToDoListItemEntity> builder)
         {

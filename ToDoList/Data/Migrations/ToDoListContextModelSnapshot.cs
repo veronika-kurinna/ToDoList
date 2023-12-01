@@ -9,7 +9,7 @@ using ToDoList.Data;
 
 namespace ToDoList.Migrations
 {
-    [DbContext(typeof(ToDoListContext))]
+    [DbContext(typeof(ToDoListItemContext))]
     partial class ToDoListContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

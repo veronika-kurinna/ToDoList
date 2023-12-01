@@ -3,11 +3,11 @@ using ToDoList.Data.Entities;
 
 namespace ToDoList.Data
 {
-    public class ToDoListContext : DbContext
+    public class ToDoListItemContext : DbContext
     {
-        public DbSet<ToDoListItemEntity> ToDoLists { get; set; }
+        public DbSet<ToDoListItemEntity> ToDoListItems { get; set; }
 
-        public ToDoListContext(DbContextOptions<ToDoListContext> options)
+        public ToDoListItemContext(DbContextOptions<ToDoListItemContext> options)
             : base(options)
         {
             Database.EnsureCreated();
@@ -15,7 +15,7 @@ namespace ToDoList.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ToDoListEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ToDoListItemEntityConfiguration());
         }
     }
 }

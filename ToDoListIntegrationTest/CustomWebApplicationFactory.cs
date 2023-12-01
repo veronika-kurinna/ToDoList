@@ -6,7 +6,7 @@ namespace ToDoListIntegrationTest
 {
     public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>, IDisposable where TProgram : class
     {
-        public DbContextOptions<ToDoListContext> Options { get; private set; }
+        public DbContextOptions<ToDoListItemContext> Options { get; private set; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -15,15 +15,15 @@ namespace ToDoListIntegrationTest
             {
                 var dbContextDescriptor = services.SingleOrDefault(
                    d => d.ServiceType ==
-                       typeof(DbContextOptions<ToDoListContext>));
+                       typeof(DbContextOptions<ToDoListItemContext>));
 
                 services.Remove(dbContextDescriptor);
 
                 string connectionString = @"Data Source=DESKTOP-PPF02FT\SQLEXPRESS;Initial Catalog=ToDoListTestDataBase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
-                var optionsBuilder = new DbContextOptionsBuilder<ToDoListContext>();
+                var optionsBuilder = new DbContextOptionsBuilder<ToDoListItemContext>();
                 optionsBuilder.UseSqlServer(connectionString);
-                services.AddScoped<DbContextOptions<ToDoListContext>>((pr) => optionsBuilder.Options);
+                services.AddScoped<DbContextOptions<ToDoListItemContext>>((pr) => optionsBuilder.Options);
 
                 Options = optionsBuilder.Options;
             });
@@ -38,7 +38,7 @@ namespace ToDoListIntegrationTest
 
         public void Dispose()
         {
-            ToDoListContext context = new ToDoListContext(Options);
+            ToDoListItemContext context = new ToDoListItemContext(Options);
             context.Database.EnsureDeleted();
             base.Dispose();
         }

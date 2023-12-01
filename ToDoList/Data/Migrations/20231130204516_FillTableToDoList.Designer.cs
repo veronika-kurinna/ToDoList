@@ -10,7 +10,7 @@ using ToDoList.Data;
 
 namespace ToDoList.Migrations
 {
-    [DbContext(typeof(ToDoListContext))]
+    [DbContext(typeof(ToDoListItemContext))]
     [Migration("20231130204516_FillTableToDoList")]
     partial class FillTableToDoList
     {

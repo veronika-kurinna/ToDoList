@@ -15,7 +15,7 @@ namespace ToDoList
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddDbContext<ToDoListContext>(options =>
+            builder.Services.AddDbContext<ToDoListItemContext>(options =>
                 options.UseSqlServer(@"Data Source=DESKTOP-PPF02FT\SQLEXPRESS;Initial Catalog=ToDoList;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
                        .EnableDetailedErrors()
                        .EnableSensitiveDataLogging()
@@ -27,9 +27,9 @@ namespace ToDoList
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddTransient<IToDoListService, ToDoListService>();
-            builder.Services.AddTransient<IToDoListRepository, ToDoListRepository>();
-            builder.Services.AddTransient<IToDoListMapper, ToDoListMapper>();
+            builder.Services.AddTransient<IToDoListItemService, ToDoListItemService>();
+            builder.Services.AddTransient<IToDoListItemRepository, ToDoListItemRepository>();
+            builder.Services.AddTransient<IToDoListItemMapper, ToDoListItemMapper>();
 
             var app = builder.Build();
 

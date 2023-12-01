@@ -10,7 +10,7 @@ using ToDoList.Data;
 
 namespace ToDoList.Migrations
 {
-    [DbContext(typeof(ToDoListContext))]
+    [DbContext(typeof(ToDoListItemContext))]
     [Migration("20231201132734_RenameColumn")]
     partial class RenameColumn
     {

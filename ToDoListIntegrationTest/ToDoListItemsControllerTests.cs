@@ -23,9 +23,9 @@ namespace ToDoListIntegrationTest
         {
             // Arrange
             HttpClient client = _factory.CreateClient();
-            var newTask = new CreateToDoListRequest
+            var newTask = new CreateToDoListItemRequest
             {
-                Task = "First Task Test",
+                Name = "First Task Test",
                 Status = ToDoItemStatuses.InProgress
             };
             var requestToPost = new HttpRequestMessage(HttpMethod.Post, "api/ToDoListItems/Create");
@@ -37,9 +37,9 @@ namespace ToDoListIntegrationTest
             var taskId = int.Parse(createResponseString);
 
             // Assert
-            var context = new ToDoListContext(_factory.Options);
-            context.ToDoLists.Should().ContainSingle(e => e.Id == taskId &&
-                                                          e.Name == newTask.Task &&
+            var context = new ToDoListItemContext(_factory.Options);
+            context.ToDoListItems.Should().ContainSingle(e => e.Id == taskId &&
+                                                          e.Name == newTask.Name &&
                                                           e.Status == newTask.Status);
         }
 
@@ -59,11 +59,11 @@ namespace ToDoListIntegrationTest
                 Name = "Second Task Test",
                 Status = ToDoItemStatuses.InProgress
             };
-            var context = new ToDoListContext(_factory.Options);
-            await context.ToDoLists.AddAsync(firstTask);
+            var context = new ToDoListItemContext(_factory.Options);
+            await context.ToDoListItems.AddAsync(firstTask);
             await context.SaveChangesAsync();
 
-            await context.ToDoLists.AddAsync(secondTask);
+            await context.ToDoListItems.AddAsync(secondTask);
             await context.SaveChangesAsync();
 
             var requestGet = new HttpRequestMessage(HttpMethod.Get, $"api/ToDoListItems/Get");
@@ -74,11 +74,11 @@ namespace ToDoListIntegrationTest
             var getResponseJson = JsonConvert.DeserializeObject<GetToDoListResponse>(getResponseString);
 
             //Assert
-            getResponseJson.ToDoLists.Should().Satisfy(f => f.Id == firstTask.Id &&
-                                                            f.Task == firstTask.Name &&
+            getResponseJson.ToDoListItems.Should().Satisfy(f => f.Id == firstTask.Id &&
+                                                            f.Name == firstTask.Name &&
                                                             f.Status == firstTask.Status,
                                                        s => s.Id == secondTask.Id &&
-                                                            s.Task == secondTask.Name &&
+                                                            s.Name == secondTask.Name &&
                                                             s.Status == secondTask.Status);
         }
     }

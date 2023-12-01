@@ -3,10 +3,10 @@ using ToDoList.Data.Entities;
 
 namespace ToDoList.Dtos.Requests
 {
-    public class CreateToDoListRequest
+    public class CreateToDoListItemRequest
     {
         [Required]
-        public string Task { get; set; }
+        public string Name { get; set; }
         public ToDoItemStatuses Status { get; set; }
     }
 }

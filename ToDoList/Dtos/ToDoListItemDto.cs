@@ -2,10 +2,10 @@
 
 namespace ToDoList.Dtos
 {
-    public class ToDoListDto
+    public class ToDoListItemDto
     {
         public int Id { get; set; }
-        public string Task { get; set; }
+        public string Name { get; set; }
         public ToDoItemStatuses Status { get; set; }
     }
 }

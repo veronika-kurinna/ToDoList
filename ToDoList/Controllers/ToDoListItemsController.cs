@@ -11,10 +11,10 @@ namespace ToDoList.Controllers
     [Route("api/[controller]/[action]")]
     public class ToDoListItemsController : ControllerBase
     {
-        private readonly IToDoListMapper _mapper;
-        private readonly IToDoListService _service;
+        private readonly IToDoListItemMapper _mapper;
+        private readonly IToDoListItemService _service;
 
-        public ToDoListItemsController(IToDoListMapper mapper, IToDoListService service)
+        public ToDoListItemsController(IToDoListItemMapper mapper, IToDoListItemService service)
         {
             _mapper = mapper;
             _service = service;
@@ -23,20 +23,20 @@ namespace ToDoList.Controllers
         [HttpGet]
         public async Task<GetToDoListResponse> Get()
         {
-            IEnumerable<ToDoListModel> toDoLists = await _service.GetAll();
-            IEnumerable<ToDoListDto> toDoListDtos = toDoLists.Select(m => _mapper.MapToDto(m));
+            IEnumerable<ToDoListItem> items = await _service.GetAll();
+            IEnumerable<ToDoListItemDto> itemsDto = items.Select(m => _mapper.MapToDto(m));
             GetToDoListResponse response = new GetToDoListResponse()
             {
-                ToDoLists = toDoListDtos
+                ToDoListItems = itemsDto
             };
             return response;
         }
 
         [HttpPost]
-        public async Task<int> Create([FromBody] CreateToDoListRequest request)
+        public async Task<int> Create([FromBody] CreateToDoListItemRequest request)
         {
-            ToDoListModel toDoList = _mapper.MapToModel(request);
-            return await _service.CreateTask(toDoList);
+            ToDoListItem item = _mapper.MapToModel(request);
+            return await _service.CreateItem(item);
         }
     }
 }
