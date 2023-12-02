@@ -9,23 +9,23 @@ namespace ToDoList.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class ToDoListItemsController : ControllerBase
+    public class ToDoListItemController : ControllerBase
     {
         private readonly IToDoListItemMapper _mapper;
         private readonly IToDoListItemService _service;
 
-        public ToDoListItemsController(IToDoListItemMapper mapper, IToDoListItemService service)
+        public ToDoListItemController(IToDoListItemMapper mapper, IToDoListItemService service)
         {
             _mapper = mapper;
             _service = service;
         }
 
         [HttpGet]
-        public async Task<GetToDoListResponse> Get()
+        public async Task<GetToDoListItemResponse> Get()
         {
             IEnumerable<ToDoListItem> items = await _service.GetAll();
             IEnumerable<ToDoListItemDto> itemsDto = items.Select(m => _mapper.MapToDto(m));
-            GetToDoListResponse response = new GetToDoListResponse()
+            GetToDoListItemResponse response = new GetToDoListItemResponse()
             {
                 ToDoListItems = itemsDto
             };
