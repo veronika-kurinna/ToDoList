@@ -49,12 +49,12 @@ namespace ToDoListIntegrationTest
             GetToDoListItemResponse? getResponseJson = JsonConvert.DeserializeObject<GetToDoListItemResponse>(getResponseString);
 
             //Assert
-            getResponseJson.ToDoListItems.Should().Contain(f => f.Id == firstItem.Id &&
-                                                                f.Name == firstItem.Name &&
-                                                                f.Status == firstItem.Status);
-            getResponseJson.ToDoListItems.Should().Contain(s => s.Id == secondItem.Id &&
-                                                                s.Name == secondItem.Name &&
-                                                                s.Status == secondItem.Status);
+            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == firstItem.Id &&
+                                                                item.Name == firstItem.Name &&
+                                                                item.Status == firstItem.Status);
+            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == secondItem.Id &&
+                                                                item.Name == secondItem.Name &&
+                                                                item.Status == secondItem.Status);
         }
 
 
@@ -78,9 +78,9 @@ namespace ToDoListIntegrationTest
 
             // Assert
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
-            context.ToDoListItems.Should().Contain(e => e.Id == itemId &&
-                                                        e.Name == newItem.Name &&
-                                                        e.Status == newItem.Status);
+            context.ToDoListItems.Should().Contain(item => item.Id == itemId &&
+                                                        item.Name == newItem.Name &&
+                                                        item.Status == newItem.Status);
         }
     }
 }
