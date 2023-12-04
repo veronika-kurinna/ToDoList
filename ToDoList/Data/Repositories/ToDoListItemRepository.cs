@@ -22,13 +22,11 @@ namespace ToDoList.Data.Repositories
             return items.Select(m => _mapper.MapToModel(m));
         }
 
-        public async Task<int> Create(ToDoListItem item)
+        public async Task Create(ToDoListItem item)
         {
             ToDoListItemEntity itemEntity = _mapper.MapToEntity(item);
             _context.Add(itemEntity);
             await _context.SaveChangesAsync();
-
-            return itemEntity.Id;
         }
     }
 }

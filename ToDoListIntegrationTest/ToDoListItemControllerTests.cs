@@ -23,22 +23,14 @@ namespace ToDoListIntegrationTest
         {
             //Arrange
             HttpClient client = _factory.CreateClient();
-            ToDoListItemEntity firstItem = new ToDoListItemEntity
+            ToDoListItemEntity[] items =
             {
-                Name = "First Item Test",
-                Status = ToDoItemStatuses.Archived
+                new ToDoListItemEntity{ Name = "First Item Test", Status = ToDoItemStatuses.ToDo },
+                new ToDoListItemEntity{ Name = "Second Item Test", Status = ToDoItemStatuses.ToDo}
             };
 
-            ToDoListItemEntity secondItem = new ToDoListItemEntity
-            {
-                Name = "Second Item Test",
-                Status = ToDoItemStatuses.InProgress
-            };
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
-            await context.ToDoListItems.AddAsync(firstItem);
-            await context.SaveChangesAsync();
-
-            await context.ToDoListItems.AddAsync(secondItem);
+            await context.ToDoListItems.AddRangeAsync(items);
             await context.SaveChangesAsync();
 
             HttpRequestMessage requestGet = new HttpRequestMessage(HttpMethod.Get, $"api/ToDoListItem/Get");
@@ -49,14 +41,13 @@ namespace ToDoListIntegrationTest
             GetToDoListItemResponse? getResponseJson = JsonConvert.DeserializeObject<GetToDoListItemResponse>(getResponseString);
 
             //Assert
-            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == firstItem.Id &&
-                                                                item.Name == firstItem.Name &&
-                                                                item.Status == firstItem.Status);
-            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == secondItem.Id &&
-                                                                item.Name == secondItem.Name &&
-                                                                item.Status == secondItem.Status);
+            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == items[0].Id &&
+                                                                   item.Name == items[0].Name &&
+                                                                   item.Status == items[0].Status);
+            getResponseJson.ToDoListItems.Should().Contain(item => item.Id == items[1].Id &&
+                                                                   item.Name == items[1].Name &&
+                                                                   item.Status == items[1].Status);
         }
-
 
         [Fact]
         public async Task Create_Item_CreatesCorrectly()
@@ -73,14 +64,11 @@ namespace ToDoListIntegrationTest
 
             // Act
             HttpResponseMessage createResponse = await client.SendAsync(requestToPost);
-            string createResponseString = await createResponse.Content.ReadAsStringAsync();
-            int itemId = int.Parse(createResponseString);
 
             // Assert
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
-            context.ToDoListItems.Should().Contain(item => item.Id == itemId &&
-                                                        item.Name == newItem.Name &&
-                                                        item.Status == newItem.Status);
+            context.ToDoListItems.Should().Contain(item => item.Name == newItem.Name &&
+                                                           item.Status == newItem.Status);
         }
     }
 }

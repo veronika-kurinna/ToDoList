@@ -5,6 +5,6 @@ namespace ToDoList.Data.Repositories
     public interface IToDoListItemRepository
     {
         Task<IEnumerable<ToDoListItem>> Get();
-        Task<int> Create(ToDoListItem item);
+        Task Create(ToDoListItem item);
     }
 }

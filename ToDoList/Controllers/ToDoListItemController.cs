@@ -33,10 +33,10 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public async Task<int> Create([FromBody] CreateToDoListItemRequest request)
+        public async Task Create([FromBody] CreateToDoListItemRequest request)
         {
             ToDoListItem item = _mapper.MapToModel(request);
-            return await _service.CreateItem(item);
+            await _service.CreateItem(item);
         }
     }
 }
