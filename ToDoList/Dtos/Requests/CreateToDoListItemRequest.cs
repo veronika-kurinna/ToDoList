@@ -7,6 +7,5 @@ namespace ToDoList.Dtos.Requests
     {
         [Required]
         public string Name { get; set; }
-        public ToDoItemStatuses Status { get; set; }
     }
 }

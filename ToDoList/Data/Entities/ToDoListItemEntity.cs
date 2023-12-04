@@ -15,7 +15,7 @@ namespace ToDoList.Data.Entities
         public void Configure(EntityTypeBuilder<ToDoListItemEntity> builder)
         {
             builder
-                .ToTable("ToDoList");
+                .ToTable("ToDoListItems");
 
             builder
                 .HasKey(k => k.Id);
@@ -23,6 +23,10 @@ namespace ToDoList.Data.Entities
             builder
                 .Property(p => p.Name)
                 .HasMaxLength(200);
+
+            builder
+                .Property(p => p.Status)
+                .HasDefaultValue(ToDoItemStatuses.ToDo);
         }
     }
 }

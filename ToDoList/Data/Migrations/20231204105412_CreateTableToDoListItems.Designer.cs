@@ -11,8 +11,8 @@ using ToDoList.Data;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListItemContext))]
-    [Migration("20231201132734_RenameColumn")]
-    partial class RenameColumn
+    [Migration("20231204105412_CreateTableToDoListItems")]
+    partial class CreateTableToDoListItems
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,11 +38,13 @@ namespace ToDoList.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoList", (string)null);
+                    b.ToTable("ToDoListItems", (string)null);
                 });
 #pragma warning restore 612, 618
         }

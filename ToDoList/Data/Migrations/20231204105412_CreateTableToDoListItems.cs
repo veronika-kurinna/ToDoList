@@ -5,23 +5,23 @@
 namespace ToDoList.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTableToDoList : Migration
+    public partial class CreateTableToDoListItems : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ToDoList",
+                name: "ToDoListItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Task = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ToDoList", x => x.Id);
+                    table.PrimaryKey("PK_ToDoListItems", x => x.Id);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace ToDoList.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ToDoList");
+                name: "ToDoListItems");
         }
     }
 }

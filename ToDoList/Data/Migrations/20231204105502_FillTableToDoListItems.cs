@@ -5,24 +5,20 @@
 namespace ToDoList.Migrations
 {
     /// <inheritdoc />
-    public partial class RenameColumn : Migration
+    public partial class FillTableToDoListItems : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Task",
-                table: "ToDoList",
-                newName: "Name");
+            migrationBuilder.Sql("INSERT INTO ToDoListItems (Name) VALUES ('Read article')");
+            migrationBuilder.Sql("INSERT INTO ToDoListItems (Name) VALUES ('Check email')");
+            migrationBuilder.Sql("INSERT INTO ToDoListItems (Name) VALUES ('Discuss project')");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Name",
-                table: "ToDoList",
-                newName: "Task");
+
         }
     }
 }

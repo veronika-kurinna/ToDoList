@@ -10,7 +10,7 @@ using ToDoList.Data;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListItemContext))]
-    partial class ToDoListContextModelSnapshot : ModelSnapshot
+    partial class ToDoListItemContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -35,11 +35,13 @@ namespace ToDoList.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoList", (string)null);
+                    b.ToTable("ToDoListItems", (string)null);
                 });
 #pragma warning restore 612, 618
         }

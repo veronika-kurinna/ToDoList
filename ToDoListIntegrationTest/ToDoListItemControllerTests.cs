@@ -25,8 +25,8 @@ namespace ToDoListIntegrationTest
             HttpClient client = _factory.CreateClient();
             ToDoListItemEntity[] items =
             {
-                new ToDoListItemEntity{ Name = "First Item Test", Status = ToDoItemStatuses.ToDo },
-                new ToDoListItemEntity{ Name = "Second Item Test", Status = ToDoItemStatuses.ToDo}
+                new ToDoListItemEntity{ Name = "First Item Test" },
+                new ToDoListItemEntity{ Name = "Second Item Test" }
             };
 
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
@@ -56,8 +56,7 @@ namespace ToDoListIntegrationTest
             HttpClient client = _factory.CreateClient();
             CreateToDoListItemRequest newItem = new CreateToDoListItemRequest
             {
-                Name = "New Item Test",
-                Status = ToDoItemStatuses.InProgress
+                Name = "New Item Test"
             };
             HttpRequestMessage requestToPost = new HttpRequestMessage(HttpMethod.Post, "api/ToDoListItem/Create");
             requestToPost.Content = JsonContent.Create(newItem);
@@ -68,7 +67,7 @@ namespace ToDoListIntegrationTest
             // Assert
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
             context.ToDoListItems.Should().Contain(item => item.Name == newItem.Name &&
-                                                           item.Status == newItem.Status);
+                                                           item.Status == ToDoItemStatuses.ToDo);
         }
     }
 }

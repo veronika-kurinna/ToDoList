@@ -44,8 +44,7 @@ namespace ToDoList.Services
         {
             ToDoListItem item = new ToDoListItem()
             {
-                Name = itemRequest.Name,
-                Status = itemRequest.Status
+                Name = itemRequest.Name
             };
             return item;
         }

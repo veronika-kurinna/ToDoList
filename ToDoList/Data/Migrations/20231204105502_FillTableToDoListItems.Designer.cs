@@ -11,8 +11,8 @@ using ToDoList.Data;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListItemContext))]
-    [Migration("20231130204516_FillTableToDoList")]
-    partial class FillTableToDoList
+    [Migration("20231204105502_FillTableToDoListItems")]
+    partial class FillTableToDoListItems
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ToDoList.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ToDoList.Data.Entities.ToDoListEntity", b =>
+            modelBuilder.Entity("ToDoList.Data.Entities.ToDoListItemEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,17 +32,19 @@ namespace ToDoList.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Task")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.HasKey("Id");
 
-                    b.ToTable("ToDoList", (string)null);
+                    b.ToTable("ToDoListItems", (string)null);
                 });
 #pragma warning restore 612, 618
         }
