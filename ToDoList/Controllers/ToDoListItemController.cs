@@ -24,7 +24,7 @@ namespace ToDoList.Controllers
         public async Task<GetToDoListItemResponse> Get()
         {
             IEnumerable<ToDoListItem> items = await _service.GetAll();
-            IEnumerable<ToDoListItemDto> itemsDto = items.Select(m => _mapper.MapToDto(m));
+            IEnumerable<ToDoListItemDto> itemsDto = items.Select(i => _mapper.MapToDto(i));
             GetToDoListItemResponse response = new GetToDoListItemResponse()
             {
                 ToDoListItems = itemsDto
