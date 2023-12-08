@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ToDoList.Data.Entities;
 
 namespace ToDoList.Dtos.Requests
 {

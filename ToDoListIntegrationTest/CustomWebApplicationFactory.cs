@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Data;
 
-namespace ToDoListIntegrationTest
+namespace ToDoListIntegrationTests
 {
     public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>, IDisposable where TProgram : class
     {
@@ -12,7 +11,6 @@ namespace ToDoListIntegrationTest
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             base.ConfigureWebHost(builder);
-
             builder.ConfigureServices(services =>
             {
                 var dbContextDescriptor = services.SingleOrDefault(
@@ -21,10 +19,10 @@ namespace ToDoListIntegrationTest
                 services.Remove(dbContextDescriptor);
 
                 var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-                var connection = config.GetSection("ToDoListIntegrationTests:ConnectionString");
+                var connection = config["ConnectionStringTest"];
 
                 var optionsBuilder = new DbContextOptionsBuilder<ToDoListItemContext>();
-                optionsBuilder.UseSqlServer(connection.Value);
+                optionsBuilder.UseSqlServer(connection);
                 services.AddScoped<DbContextOptions<ToDoListItemContext>>((pr) => optionsBuilder.Options);
 
                 Options = optionsBuilder.Options;

@@ -7,7 +7,7 @@ using ToDoList.Dtos.Requests;
 using ToDoList.Dtos.Responses;
 using Xunit;
 
-namespace ToDoListIntegrationTest
+namespace ToDoListIntegrationTests
 {
     public class ToDoListItemControllerTests : IClassFixture<DatabaseFixture<Program>>
     {
