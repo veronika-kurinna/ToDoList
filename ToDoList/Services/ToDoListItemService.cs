@@ -17,9 +17,10 @@ namespace ToDoList.Services
             return await _repository.Get();
         }
 
-        public async Task CreateItem(ToDoListItem item)
+        public async Task CreateItem(string name)
         {
-            await _repository.Create(item);
+            ToDoListItem toDoListItem = new ToDoListItem(name);
+            await _repository.Create(toDoListItem);
         }
     }
 }

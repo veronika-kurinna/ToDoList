@@ -25,8 +25,8 @@ namespace ToDoListIntegrationTests
             HttpClient client = _factory.CreateClient();
             ToDoListItemEntity[] items =
             {
-                new ToDoListItemEntity{ Name = "First Item Test" },
-                new ToDoListItemEntity{ Name = "Second Item Test" }
+                new ToDoListItemEntity{ Name = "First Item Test", Status = ToDoItemStatuses.ToDo },
+                new ToDoListItemEntity{ Name = "Second Item Test", Status = ToDoItemStatuses.InProgress }
             };
 
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
@@ -53,6 +53,7 @@ namespace ToDoListIntegrationTests
         public async Task Create_Item_CreatesCorrectly()
         {
             // Arrange
+            string f = new String('f', 210);
             HttpClient client = _factory.CreateClient();
             CreateToDoListItemRequest newItem = new CreateToDoListItemRequest
             {

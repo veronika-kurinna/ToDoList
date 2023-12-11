@@ -1,6 +1,5 @@
 ﻿using ToDoList.Data.Entities;
 using ToDoList.Dtos;
-using ToDoList.Dtos.Requests;
 using ToDoList.Models;
 
 namespace ToDoList.Services
@@ -16,17 +15,6 @@ namespace ToDoList.Services
                 Status = item.Status
             };
             return itemEntity;
-        }
-
-        public ToDoListItem MapToModel(ToDoListItemEntity itemEntity)
-        {
-            ToDoListItem item = new ToDoListItem()
-            {
-                Id = itemEntity.Id,
-                Name = itemEntity.Name,
-                Status = itemEntity.Status,
-            };
-            return item;
         }
 
         public ToDoListItemDto MapToDto(ToDoListItem item)
