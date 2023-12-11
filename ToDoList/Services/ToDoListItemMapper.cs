@@ -39,14 +39,5 @@ namespace ToDoList.Services
             };
             return itemDto;
         }
-
-        public ToDoListItem MapToModel(CreateToDoListItemRequest itemRequest)
-        {
-            ToDoListItem item = new ToDoListItem()
-            {
-                Name = itemRequest.Name
-            };
-            return item;
-        }
     }
 }

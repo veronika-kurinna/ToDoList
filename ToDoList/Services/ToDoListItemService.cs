@@ -6,7 +6,7 @@ namespace ToDoList.Services
     public class ToDoListItemService : IToDoListItemService
     {
         private readonly IToDoListItemRepository _repository;
-        
+
         public ToDoListItemService(IToDoListItemRepository repository)
         {
             _repository = repository;
