@@ -53,7 +53,6 @@ namespace ToDoListIntegrationTests
         public async Task Create_Item_CreatesCorrectly()
         {
             // Arrange
-            string f = new String('f', 210);
             HttpClient client = _factory.CreateClient();
             CreateToDoListItemRequest newItem = new CreateToDoListItemRequest
             {
@@ -69,6 +68,46 @@ namespace ToDoListIntegrationTests
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
             context.ToDoListItems.Should().Contain(item => item.Name == newItem.Name &&
                                                            item.Status == ToDoItemStatuses.ToDo);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task Create_NameIsEmpty_ReturnBadRequest(string name)
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            CreateToDoListItemRequest newItem = new CreateToDoListItemRequest
+            {
+                Name = name
+            };
+            HttpRequestMessage requestToPost = new HttpRequestMessage(HttpMethod.Post, "api/ToDoListItem/Create");
+            requestToPost.Content = JsonContent.Create(newItem);
+
+            // Act
+            HttpResponseMessage createResponse = await client.SendAsync(requestToPost);
+
+            // Assert
+            createResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task Create_SymbolsMoreThan200_ReturnBadRequest()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            CreateToDoListItemRequest newItem = new CreateToDoListItemRequest
+            {
+                Name = new String('s', 201)
+            };
+            HttpRequestMessage requestToPost = new HttpRequestMessage(HttpMethod.Post, "api/ToDoListItem/Create");
+            requestToPost.Content = JsonContent.Create(newItem);
+
+            // Act
+            HttpResponseMessage createResponse = await client.SendAsync(requestToPost);
+
+            // Assert
+            createResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
     }
 }
