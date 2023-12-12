@@ -13,15 +13,15 @@ namespace ToDoListIntegrationTests
             base.ConfigureWebHost(builder);
             builder.ConfigureServices(services =>
             {
-                var dbContextDescriptor = services.SingleOrDefault(
+                ServiceDescriptor? dbContextDescriptor = services.SingleOrDefault(
                    d => d.ServiceType ==
                        typeof(DbContextOptions<ToDoListItemContext>));
                 services.Remove(dbContextDescriptor);
 
-                var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-                var connection = config["ConnectionStringTest"];
+                IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+                string connection = configuration["ConnectionStringTest"];
 
-                var optionsBuilder = new DbContextOptionsBuilder<ToDoListItemContext>();
+                DbContextOptionsBuilder<ToDoListItemContext> optionsBuilder = new DbContextOptionsBuilder<ToDoListItemContext>();
                 optionsBuilder.UseSqlServer(connection);
                 services.AddScoped<DbContextOptions<ToDoListItemContext>>((pr) => optionsBuilder.Options);
 
@@ -32,10 +32,6 @@ namespace ToDoListIntegrationTests
 
     public class DatabaseFixture<T> : CustomWebApplicationFactory<T>, IDisposable where T : class
     {
-        public DatabaseFixture()
-        {
-        }
-
         public void Dispose()
         {
             ToDoListItemContext context = new ToDoListItemContext(Options);

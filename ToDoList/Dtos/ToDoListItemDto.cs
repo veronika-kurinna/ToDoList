@@ -1,4 +1,4 @@
-﻿using ToDoList.Data.Entities;
+﻿using ToDoList.Models;
 
 namespace ToDoList.Dtos
 {

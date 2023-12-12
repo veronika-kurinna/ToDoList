@@ -1,6 +1,4 @@
-﻿using ToDoList.Data.Entities;
-
-namespace ToDoList.Models
+﻿namespace ToDoList.Models
 {
     public class ToDoListItem
     {

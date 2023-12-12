@@ -5,6 +5,7 @@ using ToDoList.Data;
 using ToDoList.Data.Entities;
 using ToDoList.Dtos.Requests;
 using ToDoList.Dtos.Responses;
+using ToDoList.Models;
 using Xunit;
 
 namespace ToDoListIntegrationTests
