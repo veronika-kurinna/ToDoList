@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Newtonsoft.Json;
+using System.Net;
 using ToDoList;
 using ToDoList.Data;
 using ToDoList.Data.Entities;
@@ -109,6 +110,74 @@ namespace ToDoListIntegrationTests
 
             // Assert
             createResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task UpdateToDoItemName_NewName_UpdatesCorrectly()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            ToDoListItemEntity item = new ToDoListItemEntity
+            {
+                Name = "Item Test",
+                Status = ToDoItemStatuses.InProgress
+            };
+
+            ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
+            await context.ToDoListItems.AddAsync(item);
+            await context.SaveChangesAsync();
+
+            UpdateToDoItemNameRequest itemToUpdate = new UpdateToDoItemNameRequest()
+            {
+                Name = "Updated name"
+            };
+            HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/UpdateToDoItemName/{item.Id}");
+            requestToUpdate.Content = JsonContent.Create(itemToUpdate);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            await context.Entry(item).ReloadAsync();
+            context.ToDoListItems.Should().ContainSingle(i => i.Id == item.Id &&
+                                                              i.Name == item.Name &&
+                                                              i.Status == item.Status);
+        }
+
+        [Fact]
+        public async Task UpdateToDoItemStatus_NewStatus_UpdatesCorrectly()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            ToDoListItemEntity item = new ToDoListItemEntity
+            {
+                Name = "Item Test",
+                Status = ToDoItemStatuses.Done
+            };
+
+            ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
+            await context.ToDoListItems.AddAsync(item);
+            await context.SaveChangesAsync();
+
+            UpdateToDoItemStatusRequest itemToUpdate = new UpdateToDoItemStatusRequest()
+            {
+                Status = ToDoItemStatuses.Archived
+            };
+            HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/UpdateToDoItemStatus/{item.Id}");
+            requestToUpdate.Content = JsonContent.Create(itemToUpdate);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            await context.Entry(item).ReloadAsync();
+            context.ToDoListItems.Should().ContainSingle(i => i.Id == item.Id &&
+                                                              i.Name == item.Name &&
+                                                              i.Status == item.Status);
         }
     }
 }
