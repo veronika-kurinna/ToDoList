@@ -22,5 +22,19 @@ namespace ToDoList.Services
             ToDoListItem toDoListItem = new ToDoListItem(name);
             await _repository.Create(toDoListItem);
         }
+
+        public async Task UpdateNameOfItem(int id, string name)
+        {
+            ToDoListItem item = await _repository.GetById(id);
+            item.UpdateName(item, name);
+            await _repository.Update(item);
+        }
+
+        public async Task UpdateStatusOfItem(int id, ToDoItemStatuses status)
+        {
+            ToDoListItem item = await _repository.GetById(id);
+            item.UpdateStatus(item, status);
+            await _repository.Update(item);
+        }
     }
 }

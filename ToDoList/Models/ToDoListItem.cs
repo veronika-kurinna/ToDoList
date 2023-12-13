@@ -18,5 +18,17 @@
             Name = name;
             Status = status;
         }
+
+        public ToDoListItem UpdateName(ToDoListItem item, string name)
+        {
+            Name = name;
+            return item;
+        }
+
+        public ToDoListItem UpdateStatus(ToDoListItem item, ToDoItemStatuses status)
+        {
+            Status = status;
+            return item;
+        }
     }
 }

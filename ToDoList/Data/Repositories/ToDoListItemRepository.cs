@@ -19,7 +19,18 @@ namespace ToDoList.Data.Repositories
         public async Task<IEnumerable<ToDoListItem>> Get()
         {
             IEnumerable<ToDoListItemEntity> items = await _context.ToDoListItems.ToListAsync();
-            return items.Select(item => new ToDoListItem(item.Id, item.Name, item.Status));
+            return items.Select(item => _mapper.MapToModel(item));
+        }
+
+        public async Task<ToDoListItem> GetById(int id)
+        {
+            ToDoListItemEntity? itemEntity = await _context.ToDoListItems.Where(i => i.Id == id)
+                                                                         .FirstOrDefaultAsync();
+            if (itemEntity == null)
+            {
+                throw new ArgumentException($"Item with id {id} doesn't exist");
+            }
+            return _mapper.MapToModel(itemEntity);
         }
 
         public async Task Create(ToDoListItem item)
@@ -27,6 +38,20 @@ namespace ToDoList.Data.Repositories
             ToDoListItemEntity itemEntity = _mapper.MapToEntity(item);
             _context.Add(itemEntity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(ToDoListItem item)
+        {
+            ToDoListItemEntity? itemToUpdate = await _context.ToDoListItems.Where(i => i.Id == item.Id)
+                                                                           .FirstOrDefaultAsync();
+            if (itemToUpdate == null)
+            {
+                throw new ArgumentException("This item doesn't exist");
+            }
+
+            itemToUpdate.Name = item.Name;
+            itemToUpdate.Status = item.Status;
+            _context.SaveChanges();
         }
     }
 }
