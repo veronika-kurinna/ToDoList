@@ -3,8 +3,8 @@
     public class ToDoListItem
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public ToDoItemStatuses Status { get; private set; }
+        public string? Name { get; private set; }
+        public ToDoItemStatuses? Status { get; private set; }
 
         public ToDoListItem(string name)
         {
@@ -19,16 +19,16 @@
             Status = status;
         }
 
-        public ToDoListItem UpdateName(ToDoListItem item, string name)
+        public ToDoListItem(string? name, ToDoItemStatuses? status)
         {
             Name = name;
-            return item;
+            Status = status;
         }
 
-        public ToDoListItem UpdateStatus(ToDoListItem item, ToDoItemStatuses status)
+        public void UpdateItem(string? name, ToDoItemStatuses? status)
         {
+            Name = name;
             Status = status;
-            return item;
         }
     }
 }

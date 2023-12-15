@@ -12,7 +12,7 @@ namespace ToDoList.Services
             {
                 Id = item.Id,
                 Name = item.Name,
-                Status = item.Status
+                Status = (ToDoItemStatuses)item.Status
             };
             return itemEntity;
         }
@@ -28,7 +28,7 @@ namespace ToDoList.Services
             {
                 Id = item.Id,
                 Name = item.Name,
-                Status = item.Status
+                Status = (ToDoItemStatuses)item.Status
             };
             return itemDto;
         }

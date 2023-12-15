@@ -48,9 +48,17 @@ namespace ToDoList.Data.Repositories
             {
                 throw new ArgumentException("This item doesn't exist");
             }
+           
+            if (item.Name != null)
+            {
+                itemToUpdate.Name = item.Name;
+            }
 
-            itemToUpdate.Name = item.Name;
-            itemToUpdate.Status = item.Status;
+            if (item.Status != null)
+            {
+                itemToUpdate.Status = (ToDoItemStatuses)item.Status;
+            }
+
             _context.SaveChanges();
         }
     }

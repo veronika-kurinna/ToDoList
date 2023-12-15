@@ -39,15 +39,10 @@ namespace ToDoList.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task UpdateToDoItemName(int id, UpdateToDoItemNameRequest request)
+        public async Task Update(int id, UpdateToDoItemRequest request)
         {
-            await _service.UpdateNameOfItem(id, request.Name);
-        }
-
-        [HttpPut("{id:int}")]
-        public async Task UpdateToDoItemStatus(int id, UpdateToDoItemStatusRequest request)
-        {
-            await _service.UpdateStatusOfItem(id, request.Status);
+            ToDoListItem item = new ToDoListItem(request.Name, request.Status);
+            await _service.UpdateItem(id, item);
         }
     }
 }
