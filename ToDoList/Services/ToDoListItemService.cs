@@ -23,10 +23,18 @@ namespace ToDoList.Services
             await _repository.Create(toDoListItem);
         }
 
-        public async Task UpdateItem(int id, ToDoListItem item)
+        public async Task UpdateItem(int id, string? name, ToDoItemStatuses? status)
         {
             ToDoListItem itemToUpdate = await _repository.GetById(id);
-            itemToUpdate.UpdateItem(item.Name, item.Status);
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                itemToUpdate.UpdateName(name!);
+            }
+
+            if (status.HasValue)
+            {
+                itemToUpdate.UpdateStatus(status.Value);
+            }
             await _repository.Update(itemToUpdate);
         }
     }

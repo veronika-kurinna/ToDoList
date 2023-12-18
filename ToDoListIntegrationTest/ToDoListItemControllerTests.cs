@@ -143,7 +143,6 @@ namespace ToDoListIntegrationTests
             await context.Entry(item).ReloadAsync();
             context.ToDoListItems.Should().Contain(i => i.Name == itemToUpdate.Name &&
                                                         i.Status == item.Status);
-
         }
 
         [Fact]
