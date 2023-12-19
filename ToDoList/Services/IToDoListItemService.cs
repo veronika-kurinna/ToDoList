@@ -6,5 +6,6 @@ namespace ToDoList.Services
     {
         Task<IEnumerable<ToDoListItem>> GetAll();
         Task CreateItem(string name);
+        Task UpdateItem(int id, string? name, ToDoItemStatuses? status);
     }
 }

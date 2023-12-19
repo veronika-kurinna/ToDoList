@@ -18,5 +18,15 @@
             Name = name;
             Status = status;
         }
+
+        public void UpdateName(string name)
+        {
+            Name = name;
+        }
+
+        public void UpdateStatus(ToDoItemStatuses status)
+        {
+            Status = status;
+        }
     }
 }
