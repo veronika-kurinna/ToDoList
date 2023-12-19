@@ -43,5 +43,11 @@ namespace ToDoList.Controllers
         {
             await _service.UpdateItem(id, request.Name, request.Status);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task Delete(int id)
+        {
+            await _service.DeleteItem(id);
+        }
     }
 }
