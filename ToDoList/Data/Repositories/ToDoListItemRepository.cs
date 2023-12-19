@@ -36,7 +36,7 @@ namespace ToDoList.Data.Repositories
         public async Task Create(ToDoListItem item)
         {
             ToDoListItemEntity itemEntity = _mapper.MapToEntity(item);
-            _context.Add(itemEntity);
+            await _context.AddAsync(itemEntity);
             await _context.SaveChangesAsync();
         }
 
@@ -46,13 +46,12 @@ namespace ToDoList.Data.Repositories
                                                                            .FirstOrDefaultAsync();
             if (itemToUpdate == null)
             {
-                throw new ArgumentException("This item doesn't exist");
+                throw new ArgumentException($"Item with id {item.Id} doesn't exist");
             }
 
             itemToUpdate.Name = item.Name;
             itemToUpdate.Status = item.Status;
-
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
