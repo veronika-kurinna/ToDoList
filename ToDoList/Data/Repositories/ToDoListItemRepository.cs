@@ -53,5 +53,17 @@ namespace ToDoList.Data.Repositories
             itemToUpdate.Status = item.Status;
             await _context.SaveChangesAsync();
         }
+
+        public async Task Delete(int id)
+        {
+            ToDoListItemEntity? itemToDelete = await _context.ToDoListItems.Where(i => i.Id == id)
+                                                                           .FirstOrDefaultAsync();
+            if (itemToDelete == null)
+            {
+                throw new ArgumentException($"Item with id {id} doesn't exist");
+            }
+            _context.ToDoListItems.Remove(itemToDelete);
+            await _context.SaveChangesAsync();
+        }
     }
 }

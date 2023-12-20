@@ -8,5 +8,6 @@ namespace ToDoList.Data.Repositories
         Task<ToDoListItem> GetById(int id);
         Task Create(ToDoListItem item);
         Task Update(ToDoListItem item);
+        Task Delete(int id);
     }
 }

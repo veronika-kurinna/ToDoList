@@ -25,17 +25,30 @@ namespace ToDoList.Services
 
         public async Task UpdateItem(int id, string? name, ToDoItemStatuses? status)
         {
+            if (id < 0)
+            {
+                throw new ArgumentException($"Id {id} is invalid. Id must be more than zero");
+            }
             ToDoListItem itemToUpdate = await _repository.GetById(id);
+
             if (!string.IsNullOrWhiteSpace(name))
             {
                 itemToUpdate.UpdateName(name!);
             }
-
             if (status.HasValue)
             {
                 itemToUpdate.UpdateStatus(status.Value);
             }
             await _repository.Update(itemToUpdate);
+        }
+
+        public async Task DeleteItem(int id)
+        {
+            if (id < 0)
+            {
+                throw new ArgumentException($"Id {id} is invalid. Id must be more than zero");
+            } 
+            await _repository.Delete(id);
         }
     }
 }

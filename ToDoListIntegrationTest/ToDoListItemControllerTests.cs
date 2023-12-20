@@ -274,5 +274,72 @@ namespace ToDoListIntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
         }
+
+        [Fact]
+        public async Task Update_IdLessThanZero_ReturnsInternalServerError()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            int id = -3;
+
+            UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
+            {
+                Name = "Updated name",
+                Status = ToDoItemStatuses.Archived
+            };
+            HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{id}");
+            requestToUpdate.Content = JsonContent.Create(itemToUpdate);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        }
+
+        [Fact]
+        public async Task Delete_IdMoreThanZero_DeletesCorrectly()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            ToDoListItemEntity item = new ToDoListItemEntity
+            {
+                Name = "Item Test",
+                Status = ToDoItemStatuses.ToDo
+            };
+
+            ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
+            await context.AddAsync(item);
+            await context.SaveChangesAsync();
+
+            HttpRequestMessage requestToDelete = new HttpRequestMessage(HttpMethod.Delete, $"api/ToDoListItem/Delete/{item.Id}");
+            requestToDelete.Content = JsonContent.Create(requestToDelete);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToDelete);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            context.ToDoListItems.Should().NotContain(i => i.Id == item.Id &&
+                                                           i.Name == item.Name &&
+                                                           i.Status == item.Status);
+        }
+
+        [Fact]
+        public async Task Delete_IdLessThanZero_ReturnsInternalServerError()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            int id = -2;
+
+            HttpRequestMessage requestToDelete = new HttpRequestMessage(HttpMethod.Delete, $"api/ToDoListItem/Delete/{id}");
+            requestToDelete.Content = JsonContent.Create(requestToDelete);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToDelete);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        }
     }
 }
