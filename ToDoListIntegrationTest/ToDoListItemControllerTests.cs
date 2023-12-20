@@ -276,6 +276,28 @@ namespace ToDoListIntegrationTests
         }
 
         [Fact]
+        public async Task Update_IdLessThanZero_ReturnsInternalServerError()
+        {
+            // Arrange
+            HttpClient client = _factory.CreateClient();
+            int id = -3;
+
+            UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
+            {
+                Name = "Updated name",
+                Status = ToDoItemStatuses.Archived
+            };
+            HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{id}");
+            requestToUpdate.Content = JsonContent.Create(itemToUpdate);
+
+            // Act
+            HttpResponseMessage response = await client.SendAsync(requestToUpdate);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        }
+
+        [Fact]
         public async Task Delete_IdMoreThanZero_DeletesCorrectly()
         {
             // Arrange
