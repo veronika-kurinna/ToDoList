@@ -40,6 +40,9 @@ namespace ToDoList
                 app.UseSwaggerUI();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
