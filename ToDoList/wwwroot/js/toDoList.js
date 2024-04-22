@@ -4,7 +4,7 @@ addToDoListItems(toDoListItems);
 function addToDoListItems(items) {
     const ul = document.querySelector("ul");
 
-    for (var i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.length; i++) {
         let li = document.createElement("li");
         li.classList.add("list-group-item");
         li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${items[i].id}" id="${items[i].id}">
