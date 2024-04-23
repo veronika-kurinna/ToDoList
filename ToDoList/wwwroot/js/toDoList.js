@@ -1,7 +1,7 @@
-﻿let toDoListItems = getToDoListItems();
-addToDoListItems(toDoListItems);
+﻿getToDoListItems()
+    .then(items => renderToDoList(items));
 
-function addToDoListItems(items) {
+function renderToDoList(items) {
     const ul = document.querySelector("ul");
 
     for (let i = 0; i < items.length; i++) {
@@ -22,7 +22,8 @@ function getToDoListItems() {
         }
     };
 
-    fetch(url, request)
+    return fetch(url, request)
         .then(response => response.json())
+        .then(response => response.toDoListItems)
         .catch(error => console.log(error.message));
 }
