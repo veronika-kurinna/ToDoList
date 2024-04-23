@@ -28,7 +28,7 @@ namespace ToDoListIntegrationTests
             ToDoListItemEntity[] items =
             {
                 new ToDoListItemEntity{ Name = "First Item Test", Status = ToDoItemStatuses.ToDo },
-                new ToDoListItemEntity{ Name = "Second Item Test", Status = ToDoItemStatuses.InProgress }
+                new ToDoListItemEntity{ Name = "Second Item Test", Status = ToDoItemStatuses.Done }
             };
 
             ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
@@ -119,7 +119,7 @@ namespace ToDoListIntegrationTests
             HttpClient client = _factory.CreateClient();
 
             string initialName = "Item Test";
-            ToDoItemStatuses initialStatus = ToDoItemStatuses.InProgress;
+            ToDoItemStatuses initialStatus = ToDoItemStatuses.Archived;
             ToDoListItemEntity item = new ToDoListItemEntity
             {
                 Name = initialName,
@@ -225,7 +225,7 @@ namespace ToDoListIntegrationTests
             HttpClient client = _factory.CreateClient();
 
             string initialName = "Item Test";
-            ToDoItemStatuses initialStatus = ToDoItemStatuses.InProgress;
+            ToDoItemStatuses initialStatus = ToDoItemStatuses.ToDo;
             ToDoListItemEntity item = new ToDoListItemEntity
             {
                 Name = initialName,

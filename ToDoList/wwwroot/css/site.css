@@ -1,0 +1,25 @@
+﻿html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+}
+
+.background {
+    background-color: #e3f2fd;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.content{
+    width: 800px;
+}
+
+#brand {
+    color: #0d6efd;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.list-group{
+    margin-top: 20px;
+}

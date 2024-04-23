@@ -27,6 +27,13 @@ namespace ToDoList
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(policyBuilder =>
+            policyBuilder.AddDefaultPolicy(policy =>
+                    policy.WithOrigins("*")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod())
+        );
+
             builder.Services.AddTransient<IToDoListItemService, ToDoListItemService>();
             builder.Services.AddTransient<IToDoListItemRepository, ToDoListItemRepository>();
             builder.Services.AddTransient<IToDoListItemMapper, ToDoListItemMapper>();
@@ -40,10 +47,11 @@ namespace ToDoList
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
