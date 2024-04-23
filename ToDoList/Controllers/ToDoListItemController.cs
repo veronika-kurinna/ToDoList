@@ -33,9 +33,9 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public async Task Create([FromBody] CreateToDoListItemRequest request)
+        public async Task<int> Create([FromBody] CreateToDoListItemRequest request)
         {
-            await _service.CreateItem(request.Name);
+            return await _service.CreateItem(request.Name);
         }
 
         [HttpPut("{id:int}")]
