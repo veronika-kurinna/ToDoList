@@ -1,20 +1,9 @@
 ﻿getToDoListItems()
     .then(items => renderToDoList(items));
 
-document.querySelector("#createItem").addEventListener("click", function () {
-    createToDoListItem()
-        .then(id => renderNewItem(id));
-});
-
 function renderToDoList(items) {
-    const ul = document.querySelector("ul");
-
     for (let i = 0; i < items.length; i++) {
-        let li = document.createElement("li");
-        li.classList.add("list-group-item");
-        li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${items[i].id}" id="${items[i].id}">
-                        <label>${items[i].name}</label>`;
-        ul.append(li);
+        renderItem(items[i]);
     }
 }
 
@@ -37,6 +26,10 @@ function createToDoListItem() {
     let url = "http://localhost:5226/api/ToDoListItem/Create";
     let toDoListItem = document.querySelector("#newItem").value;
 
+    if (!toDoListItem) {
+        throw new Error("Item is required");
+    }
+
     let request = {
         method: "POST",
         headers: {
@@ -52,15 +45,18 @@ function createToDoListItem() {
         .catch(error => console.log(error.message));
 }
 
-function renderNewItem(id) {
-    let toDoListItem = document.querySelector("#newItem").value;
-
+function renderItem(item) {
     let ul = document.querySelector("ul");
     let li = document.createElement("li");
     li.classList.add("list-group-item");
-    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${id}" id="${id}">
-                    <label>${toDoListItem}</label>`;
+    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${item.id}" id="${item.id}">
+                    <label>${item.name}</label>`;
     ul.append(li);
+}
+
+function addItemClickHandler() {
+    createToDoListItem()
+        .then(item => renderItem(item));
 
     document.querySelector("#newItem").value = "";
 }
