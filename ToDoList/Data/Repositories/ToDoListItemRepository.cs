@@ -33,12 +33,12 @@ namespace ToDoList.Data.Repositories
             return _mapper.MapToModel(itemEntity);
         }
 
-        public async Task<int> Create(ToDoListItem item)
+        public async Task<ToDoListItem> Create(ToDoListItem item)
         {
             ToDoListItemEntity itemToCreate = _mapper.MapToEntity(item);
             await _context.AddAsync(itemToCreate);
             await _context.SaveChangesAsync();
-            return itemToCreate.Id;
+            return item;
         }
 
         public async Task Update(ToDoListItem item)
