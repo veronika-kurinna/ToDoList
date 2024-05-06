@@ -1,5 +1,7 @@
-﻿function getToDoListItems() {
-    let url = "http://localhost:5226/api/ToDoListItem/Get";
+﻿const urlGet = "http://localhost:5226/api/ToDoListItem/Get";
+const urlCreate = "http://localhost:5226/api/ToDoListItem/Create";
+
+function getToDoListItems() {
     let request = {
         method: "GET",
         headers: {
@@ -7,31 +9,24 @@
         }
     };
 
-    return fetch(url, request)
+    return fetch(urlGet, request)
         .then(response => response.json())
         .then(response => response.toDoListItems)
         .catch(error => console.log(error.message));
 }
 
-function createToDoListItem() {
-    let url = "http://localhost:5226/api/ToDoListItem/Create";
-    let toDoListItem = document.querySelector("#newItem").value;
-
-    if (!toDoListItem) {
-        throw new Error("Item is required");
-    }
-
+function createToDoListItem(item) {
     let request = {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: toDoListItem
+            name: item
         })
     };
 
-    return fetch(url, request)
+    return fetch(urlCreate, request)
         .then(response => response.json())
         .catch(error => console.log(error.message));
 }
