@@ -29,3 +29,17 @@ function createToDoListItem(item) {
         .catch(error => console.log(error.message));
 }
 
+function updateToDoListItem(item) {
+    let request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(item)
+    }
+
+    return fetch(`${baseUrl}api/ToDoListItem/Update/${item.Id}`, request)
+        .then(response => response.json())
+        .catch(error => console.log(error.message));
+}
+
