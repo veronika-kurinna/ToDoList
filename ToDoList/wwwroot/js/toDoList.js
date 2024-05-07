@@ -8,7 +8,7 @@ function renderToDoList(items) {
 }
 
 function renderItem(item) {
-    let ul = document.querySelector("#toDoListItems");
+    let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
     li.classList.add("list-group-item");
     li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${item.id}" id="${item.id}">
@@ -17,13 +17,15 @@ function renderItem(item) {
 }
 
 function addItemClickHandler() {
-    let newItem = document.querySelector("#inputAddItem").value;
-    if (!newItem) {
+    let input = document.querySelector("#addItemInput");
+    let nameItem = input.value;
+    if (!nameItem) {
         throw new Error("Item is required");
     }
 
+    let newItem = { name: nameItem };
     createToDoListItem(newItem)
         .then(item => renderItem(item));
 
-    document.querySelector("#inputAddItem").value = "";
+    input.value = "";
 }

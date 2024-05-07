@@ -1,5 +1,4 @@
-﻿const urlGet = "http://localhost:5226/api/ToDoListItem/Get";
-const urlCreate = "http://localhost:5226/api/ToDoListItem/Create";
+﻿const baseUrl = "http://localhost:5226";
 
 function getToDoListItems() {
     let request = {
@@ -9,7 +8,7 @@ function getToDoListItems() {
         }
     };
 
-    return fetch(urlGet, request)
+    return fetch(`${baseUrl}/api/ToDoListItem/Get`, request)
         .then(response => response.json())
         .then(response => response.toDoListItems)
         .catch(error => console.log(error.message));
@@ -21,12 +20,10 @@ function createToDoListItem(item) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            name: item
-        })
+        body: JSON.stringify(item)
     };
 
-    return fetch(urlCreate, request)
+    return fetch(`${baseUrl}/api/ToDoListItem/Create`, request)
         .then(response => response.json())
         .then(response => response.toDoListItem)
         .catch(error => console.log(error.message));
