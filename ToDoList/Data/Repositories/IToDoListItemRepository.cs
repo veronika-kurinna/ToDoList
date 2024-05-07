@@ -6,7 +6,7 @@ namespace ToDoList.Data.Repositories
     {
         Task<IEnumerable<ToDoListItem>> Get();
         Task<ToDoListItem> GetById(int id);
-        Task Create(ToDoListItem item);
+        Task<ToDoListItem> Create(ToDoListItem item);
         Task Update(ToDoListItem item);
         Task Delete(int id);
     }

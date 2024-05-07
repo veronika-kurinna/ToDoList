@@ -1,16 +1,14 @@
 ﻿html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    height: 100%;
 }
 
 .background {
     background-color: #e3f2fd;
-    height: 100%;
     display: flex;
     justify-content: center;
 }
 
-.content{
+.content {
     width: 800px;
 }
 
@@ -20,6 +18,7 @@
     padding-bottom: 20px;
 }
 
-.list-group{
+.list-group {
     margin-top: 20px;
+    padding-bottom: 40px;
 }

@@ -33,9 +33,15 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public async Task Create([FromBody] CreateToDoListItemRequest request)
+        public async Task<CreateToDoListItemResponse> Create([FromBody] CreateToDoListItemRequest request)
         {
-            await _service.CreateItem(request.Name);
+            ToDoListItem newItem = await _service.CreateItem(request.Name);
+            ToDoListItemDto itemDto = _mapper.MapToDto(newItem);
+            CreateToDoListItemResponse response = new CreateToDoListItemResponse()
+            {
+                ToDoListItem = itemDto
+            };
+            return response;
         }
 
         [HttpPut("{id:int}")]
