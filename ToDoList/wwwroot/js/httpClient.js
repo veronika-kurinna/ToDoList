@@ -28,6 +28,7 @@ function createToDoListItem(item) {
 
     return fetch(urlCreate, request)
         .then(response => response.json())
+        .then(response => response.toDoListItem)
         .catch(error => console.log(error.message));
 }
 

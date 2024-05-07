@@ -65,11 +65,12 @@ namespace ToDoListIntegrationTests
 
             // Act
             HttpResponseMessage createResponse = await client.SendAsync(requestToPost);
+            string createResponseString = await createResponse.Content.ReadAsStringAsync();
+            CreateToDoListItemResponse? createResponseJson = JsonConvert.DeserializeObject<CreateToDoListItemResponse>(createResponseString);
 
             // Assert
-            ToDoListItemContext context = new ToDoListItemContext(_factory.Options);
-            context.ToDoListItems.Should().Contain(item => item.Name == newItem.Name &&
-                                                           item.Status == ToDoItemStatuses.ToDo);
+            createResponseJson.ToDoListItem.Name.Should().Be(newItem.Name);
+            createResponseJson.ToDoListItem.Status.Should().Be(ToDoItemStatuses.ToDo);
         }
 
         [Theory]
