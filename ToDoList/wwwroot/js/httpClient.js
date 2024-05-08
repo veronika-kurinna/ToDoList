@@ -1,6 +1,4 @@
-﻿const baseUrl = "http://localhost:5226";
-
-function getToDoListItems() {
+﻿function getToDoListItems() {
     let request = {
         method: "GET",
         headers: {
@@ -38,8 +36,7 @@ function updateToDoListItem(item) {
         body: JSON.stringify(item)
     }
 
-    return fetch(`${baseUrl}/api/ToDoListItem/Update/${item.id}`, request)
-        .then(response => response.json())
+    fetch(`${baseUrl}/api/ToDoListItem/Update/${item.id}`, request)
         .catch(error => console.log(error.message));
 }
 

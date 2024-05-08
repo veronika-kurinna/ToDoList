@@ -1,5 +1,10 @@
-﻿getToDoListItems()
-    .then(items => renderToDoList(items));
+﻿let toDoListItems = [];
+
+getToDoListItems()
+    .then(items => {
+        toDoListItems = items;
+        renderToDoList(items);
+    });
 
 function renderToDoList(items) {
     for (let i = 0; i < items.length; i++) {
@@ -10,11 +15,12 @@ function renderToDoList(items) {
 function renderItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
+    let isStatusDone = item.status == statusDone;
+
     li.classList.add("list-group-item");
-    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatus(${JSON.stringify(item)})'>
-                    <label class="label-${item.id}">${item.name}</label>`;
+    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${isStatusDone ? 'checked' : ''}>
+                    <label class="label-${item.id} ${isStatusDone ? 'strikethrough' : ''}">${item.name}</label>`;
     ul.append(li);
-    renderIsStatusDone(item);
 }
 
 function addItemClickHandler() {
@@ -26,36 +32,27 @@ function addItemClickHandler() {
 
     let newItem = { name: nameItem };
     createToDoListItem(newItem)
-        .then(item => renderItem(item));
+        .then(item => {
+            toDoListItems.push(item);
+            renderItem(item);
+        });
 
     input.value = "";
 }
 
-function renderIsStatusDone(item) {
+function toggleStatusClickHandler(id) {
+    let item = toDoListItems.find(e => e.id == id);
     let label = document.querySelector(".label-" + item.id);
-    let checkbox = document.getElementById(item.id);
-    let statusDone = 1;
-    if (item.status == statusDone) {
-        label.classList.add("strikethrough");
-        checkbox.checked = true;
-    }
-}
 
-function toggleStatus(item) {
-    let checkbox = document.getElementById(item.id).checked;
-    let label = document.querySelector(".label-" + item.id);
-    let updatedItem;
-
-    if (checkbox) {
+    if (item.status == statusToDo) {
         label.classList.add("strikethrough");
-        let statusDone = 1;
-        updatedItem = { id: item.id, name: item.name, status: statusDone }
-        updateToDoListItem(updatedItem);
+        item.status = statusDone;
+        updateToDoListItem(item);
     }
-    else {
+    else
+    {
         label.classList.remove("strikethrough");
-        let statusToDo = 0;
-        updatedItem = { id: item.id, name: item.name, status: statusToDo }
-        updateToDoListItem(updatedItem);
+        item.status = statusToDo;
+        updateToDoListItem(item);
     }
 }

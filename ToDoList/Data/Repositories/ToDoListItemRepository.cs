@@ -38,7 +38,7 @@ namespace ToDoList.Data.Repositories
             ToDoListItemEntity itemToCreate = _mapper.MapToEntity(item);
             await _context.AddAsync(itemToCreate);
             await _context.SaveChangesAsync();
-            return item;
+            return _mapper.MapToModel(itemToCreate);
         }
 
         public async Task Update(ToDoListItem item)
