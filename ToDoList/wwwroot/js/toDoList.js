@@ -15,11 +15,10 @@ function renderToDoList(items) {
 function renderItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
-    let isStatusDone = item.status == statusDone;
 
     li.classList.add("list-group-item");
-    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${isStatusDone ? 'checked' : ''}>
-                    <label class="label-${item.id} ${isStatusDone ? 'strikethrough' : ''}">${item.name}</label>`;
+    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
+                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>`;
     ul.append(li);
 }
 
