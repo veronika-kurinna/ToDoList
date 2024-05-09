@@ -26,3 +26,9 @@
 .strikethrough {
     text-decoration: line-through;
 }
+
+.toDoListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
