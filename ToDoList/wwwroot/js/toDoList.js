@@ -1,5 +1,10 @@
-﻿getToDoListItems()
-    .then(items => renderToDoList(items));
+﻿let toDoListItems = [];
+
+getToDoListItems()
+    .then(items => {
+        toDoListItems = items;
+        renderToDoList(items);
+    });
 
 function renderToDoList(items) {
     for (let i = 0; i < items.length; i++) {
@@ -10,9 +15,10 @@ function renderToDoList(items) {
 function renderItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
+
     li.classList.add("list-group-item");
-    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" value="${item.id}" id="${item.id}">
-                    <label>${item.name}</label>`;
+    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
+                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>`;
     ul.append(li);
 }
 
@@ -25,7 +31,27 @@ function addItemClickHandler() {
 
     let newItem = { name: nameItem };
     createToDoListItem(newItem)
-        .then(item => renderItem(item));
+        .then(item => {
+            toDoListItems.push(item);
+            renderItem(item);
+        });
 
     input.value = "";
+}
+
+function toggleStatusClickHandler(id) {
+    let item = toDoListItems.find(e => e.id == id);
+    let label = document.querySelector(".label-" + item.id);
+
+    if (item.status == statusToDo) {
+        label.classList.add("strikethrough");
+        item.status = statusDone;
+        updateToDoListItem(item);
+    }
+    else
+    {
+        label.classList.remove("strikethrough");
+        item.status = statusToDo;
+        updateToDoListItem(item);
+    }
 }

@@ -69,6 +69,7 @@ namespace ToDoListIntegrationTests
             CreateToDoListItemResponse? createResponseJson = JsonConvert.DeserializeObject<CreateToDoListItemResponse>(createResponseString);
 
             // Assert
+            createResponseJson.ToDoListItem.Id.Should().BeGreaterThan(0);
             createResponseJson.ToDoListItem.Name.Should().Be(newItem.Name);
             createResponseJson.ToDoListItem.Status.Should().Be(ToDoItemStatuses.ToDo);
         }

@@ -1,6 +1,4 @@
-﻿const baseUrl = "http://localhost:5226";
-
-function getToDoListItems() {
+﻿function getToDoListItems() {
     let request = {
         method: "GET",
         headers: {
@@ -26,6 +24,19 @@ function createToDoListItem(item) {
     return fetch(`${baseUrl}/api/ToDoListItem/Create`, request)
         .then(response => response.json())
         .then(response => response.toDoListItem)
+        .catch(error => console.log(error.message));
+}
+
+function updateToDoListItem(item) {
+    let request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(item)
+    }
+
+    fetch(`${baseUrl}/api/ToDoListItem/Update/${item.id}`, request)
         .catch(error => console.log(error.message));
 }
 
