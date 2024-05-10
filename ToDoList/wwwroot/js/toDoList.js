@@ -17,8 +17,17 @@ function renderItem(item) {
     let li = document.createElement("li");
 
     li.classList.add("list-group-item");
-    li.innerHTML = `<input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
-                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>`;
+    li.innerHTML = `<div class="toDoListItem">
+                        <div>
+                            <input class="form-check-input me-1" type="checkbox" id="${item.id}" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
+                            <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
+                        </div>
+                        <div class="btn-group me-1">
+                            <button class="btn btn-outline-secondary" type="button" id="" onclick='toggleStatusArchivedClickHandler(${item.id})'>
+                                <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
+                            </button>
+                        </div>
+                    </div>`;
     ul.append(li);
 }
 
@@ -52,6 +61,25 @@ function toggleStatusClickHandler(id) {
     {
         label.classList.remove("strikethrough");
         item.status = statusToDo;
+        updateToDoListItem(item);
+    }
+}
+
+function toggleStatusArchivedClickHandler(id) {
+    let item = toDoListItems.find(e => e.id == id);
+    let icon = document.querySelector(".bi-" + item.id);
+
+    if (item.status == statusArchived) {
+        icon.classList.remove("bi-arrow-down-square-fill");
+        icon.classList.add("bi-arrow-up-square-fill");
+        item.status = statusToDo;
+        updateToDoListItem(item);
+    }
+    else
+    {
+        icon.classList.remove("bi-arrow-up-square-fill");
+        icon.classList.add("bi-arrow-down-square-fill");
+        item.status = statusArchived;
         updateToDoListItem(item);
     }
 }
