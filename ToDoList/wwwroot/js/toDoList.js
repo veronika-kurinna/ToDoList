@@ -103,13 +103,10 @@ function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
     let editedItem = toDoListItems.find(e => e.IsEditable == true);
     if (editedItem !== undefined) {
-        let input = document.getElementsByClassName(`input-group ${editedItem.id}`)[0];
-        input.remove();
+        removeInputGroup(editedItem.id);
         editedItem.IsEditable = false;
 
-        let li = document.getElementsByClassName(`list-group-item ${editedItem.id}`)[0];
-        li.innerHTML = returnItem(editedItem);
-        li.append();
+        appendListGroupItem(editedItem);
     }
 
     let classToDoListItem = document.getElementById(item.id);
@@ -120,6 +117,7 @@ function editNameClickHandler(id) {
     div.classList.add("input-group");
     div.classList.add(item.id);
     div.innerHTML = `<input type="text" class="form-control" id="editItemInput" value="${item.name}">
+                     <button class="btn btn-secondary" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
                      <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>`;
     li.append(div);
 
@@ -138,10 +136,27 @@ function saveNameClickHandler(id) {
     item.name = editedName;
     updateToDoListItem(item);
 
-    let inp = document.getElementsByClassName(`input-group ${item.id}`)[0];
-    inp.remove();
+    removeInputGroup(item.id);
     item.IsEditable = false;
 
+    appendListGroupItem(item);
+}
+
+function cancelEditClickHandler(id) {
+    let item = toDoListItems.find(e => e.id == id);
+
+    removeInputGroup(item.id);
+    item.IsEditable = false;
+
+    appendListGroupItem(item);
+}
+
+function removeInputGroup(id) {
+    let input = document.getElementsByClassName(`input-group ${id}`)[0];
+    input.remove();
+}
+
+function appendListGroupItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = returnItem(item);
     li.append();
