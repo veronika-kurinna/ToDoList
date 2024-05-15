@@ -4,12 +4,19 @@ getToDoListItems()
     .then(items => {
         toDoListItems = items;
         renderToDoList(items);
+        addPropertyToArray(toDoListItems);
     });
 
 function renderToDoList(items) {
     for (let i = 0; i < items.length; i++) {
         renderItem(items[i]);
     }
+}
+
+function addPropertyToArray(array) {
+    array.forEach(function (item) {
+        item.IsEditable = "false";
+    });
 }
 
 function renderItem(item) {
@@ -94,6 +101,17 @@ function returnItem(item) {
 
 function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
+    let editedItem = toDoListItems.find(e => e.IsEditable == true);
+    if (editedItem !== undefined) {
+        let input = document.getElementsByClassName(`input-group ${editedItem.id}`)[0];
+        input.remove();
+        editedItem.IsEditable = false;
+
+        let li = document.getElementsByClassName(`list-group-item ${editedItem.id}`)[0];
+        li.innerHTML = returnItem(editedItem);
+        li.append();
+    }
+
     let classToDoListItem = document.getElementById(item.id);
     classToDoListItem.remove();
 
@@ -104,6 +122,8 @@ function editNameClickHandler(id) {
     div.innerHTML = `<input type="text" class="form-control" id="editItemInput" value="${item.name}">
                      <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>`;
     li.append(div);
+
+    item.IsEditable = true;
 }
 
 function saveNameClickHandler(id) {
@@ -120,6 +140,7 @@ function saveNameClickHandler(id) {
 
     let inp = document.getElementsByClassName(`input-group ${item.id}`)[0];
     inp.remove();
+    item.IsEditable = false;
 
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = returnItem(item);
