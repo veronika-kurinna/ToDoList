@@ -7,26 +7,54 @@ getToDoListItems()
         addPropertyToArray(toDoListItems);
     });
 
-function renderToDoList(items) {
-    for (let i = 0; i < items.length; i++) {
-        renderItem(items[i]);
-    }
-}
-
 function addPropertyToArray(array) {
     array.forEach(function (item) {
         item.IsEditable = "false";
     });
 }
 
-function renderItem(item) {
+function renderToDoList(items) {
+    for (let i = 0; i < items.length; i++) {
+        renderListGroupItem(items[i]);
+    }
+}
+
+function renderListGroupItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
 
     li.classList.add("list-group-item");
     li.classList.add(item.id);
-    li.innerHTML = returnItem(item);
+    li.innerHTML = renderItem(item);
     ul.append(li);
+}
+
+function renderItem(item) {
+    return `<div class="toDoListItem ${item.id}">
+                <div>
+                    <input class="form-check-input me-1" type="checkbox" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
+                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
+                </div>
+                <div class="btn-group me-1">
+                    <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
+	                    <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
+                        <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
+                    </button>
+                </div>
+            </div>`;
+}
+
+function removeInputGroup(id) {
+    let input = document.getElementsByClassName(`input-group ${id}`)[0];
+    input.remove();
+}
+
+function appendItem(item) {
+    let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
+    li.innerHTML = renderItem(item);
+    li.append();
 }
 
 function addItemClickHandler() {
@@ -40,7 +68,7 @@ function addItemClickHandler() {
     createToDoListItem(newItem)
         .then(item => {
             toDoListItems.push(item);
-            renderItem(item);
+            renderListGroupItem(item);
         });
 
     input.value = "";
@@ -82,23 +110,6 @@ function toggleStatusArchivedClickHandler(id) {
     }
 } 
 
-function returnItem(item) {
-    return `<div class="toDoListItem" id="${item.id}">
-                <div>
-                    <input class="form-check-input me-1" type="checkbox" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
-                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
-                </div>
-                <div class="btn-group me-1">
-                    <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
-	                    <i class="bi bi-pencil-fill"></i>
-                    </button>
-                    <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
-                        <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
-                    </button>
-                </div>
-            </div>`;
-}
-
 function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
     let editedItem = toDoListItems.find(e => e.IsEditable == true);
@@ -106,10 +117,10 @@ function editNameClickHandler(id) {
         removeInputGroup(editedItem.id);
         editedItem.IsEditable = false;
 
-        appendListGroupItem(editedItem);
+        appendItem(editedItem);
     }
 
-    let classToDoListItem = document.getElementById(item.id);
+    let classToDoListItem = document.getElementsByClassName(`toDoListItem ${item.id}`)[0];
     classToDoListItem.remove();
 
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
@@ -139,7 +150,7 @@ function saveNameClickHandler(id) {
     removeInputGroup(item.id);
     item.IsEditable = false;
 
-    appendListGroupItem(item);
+    appendItem(item);
 }
 
 function cancelEditClickHandler(id) {
@@ -148,16 +159,5 @@ function cancelEditClickHandler(id) {
     removeInputGroup(item.id);
     item.IsEditable = false;
 
-    appendListGroupItem(item);
-}
-
-function removeInputGroup(id) {
-    let input = document.getElementsByClassName(`input-group ${id}`)[0];
-    input.remove();
-}
-
-function appendListGroupItem(item) {
-    let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
-    li.innerHTML = returnItem(item);
-    li.append();
+    appendItem(item);
 }
