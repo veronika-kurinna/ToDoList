@@ -23,8 +23,7 @@ function renderListGroupItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
 
-    li.classList.add("list-group-item");
-    li.classList.add(item.id);
+    li.classList.add("list-group-item", item.id);
     li.innerHTML = renderItem(item);
     ul.append(li);
 }
@@ -125,8 +124,7 @@ function editNameClickHandler(id) {
 
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     let div = document.createElement("div");
-    div.classList.add("input-group");
-    div.classList.add(item.id);
+    div.classList.add("input-group", item.id);
     div.innerHTML = `<input type="text" class="form-control" id="editItemInput" value="${item.name}">
                      <button class="btn btn-secondary" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
                      <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>`;
