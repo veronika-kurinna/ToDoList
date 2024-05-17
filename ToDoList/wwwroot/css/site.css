@@ -27,7 +27,7 @@
     text-decoration: line-through;
 }
 
-.toDoListItem {
+.notEditableItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
