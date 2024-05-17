@@ -115,22 +115,15 @@ function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
     let editedItem = toDoListItems.find(e => e.IsEditable == true);
     if (editedItem !== undefined) {
-        let editableItem = document.getElementsByClassName(`editableItem ${editedItem.id}`)[0];
-        editableItem.remove();
-
+        removeClassEditableItem(editedItem.id);
         editedItem.IsEditable = false;
-        let li = document.getElementsByClassName(`list-group-item ${editedItem.id}`)[0];
-        li.innerHTML = renderItem(editedItem);
-        li.append();
+        renderItemInListGroupItem(editedItem);
     }
-
     let notEditableItem = document.getElementsByClassName(`notEditableItem ${item.id}`)[0];
     notEditableItem.remove();
 
     item.IsEditable = true;
-    let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
-    li.innerHTML = renderItem(item);
-    li.append();
+    renderItemInListGroupItem(item);
 }
 
 function saveNameClickHandler(id) {
@@ -141,26 +134,27 @@ function saveNameClickHandler(id) {
     if (!editedName) {
         throw new Error("Item is required");
     }
-
     item.name = editedName;
     updateToDoListItem(item);
 
-    let editableItem = document.getElementsByClassName(`editableItem ${item.id}`)[0];
-    editableItem.remove();
-
+    removeClassEditableItem(item.id);
     item.IsEditable = false;
-    let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
-    li.innerHTML = renderItem(item);
-    li.append();
+    renderItemInListGroupItem(item);
 }
 
 function cancelEditClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-
-    let editableItem = document.getElementsByClassName(`editableItem ${item.id}`)[0];
-    editableItem.remove();
+    removeClassEditableItem(item.id);
     item.IsEditable = false;
+    renderItemInListGroupItem(item);
+}
 
+function removeClassEditableItem(id) {
+    let input = document.getElementsByClassName(`editableItem ${id}`)[0];
+    input.remove();
+}
+
+function renderItemInListGroupItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = renderItem(item);
     li.append();
