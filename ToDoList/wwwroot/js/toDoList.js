@@ -28,26 +28,30 @@ function renderToDoListItem(item) {
 }
 
 function buildInnerHtml(item) {
-    let editableItem = `<div class="editableItem ${item.id}">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="editItemInput" value="${item.name}">
-                                <button class="btn btn-secondary" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
-                                <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>
+    let editableItem = `<div class="toDoListItem ${item.id}">
+                            <div class="editableItem">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="editItemInput" value="${item.name}">
+                                    <button class="btn btn-secondary" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
+                                    <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>
+                                </div>
                             </div>
                         </div>`;
 
-    let notEditableItem = `<div class="notEditableItem ${item.id}">
-                                <div>
-                                    <input class="form-check-input me-1" type="checkbox" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
-                                    <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
-                                </div>
-                                <div class="btn-group me-1">
-                                    <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
-	                                    <i class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
-                                        <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
-                                    </button>
+    let notEditableItem = `<div class="toDoListItem ${item.id}">
+                                <div class="notEditableItem">
+                                    <div>
+                                        <input class="form-check-input me-1" type="checkbox" onclick='toggleStatusClickHandler(${item.id})' ${item.status == statusDone ? 'checked' : ''}>
+                                        <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
+                                    </div>
+                                    <div class="btn-group me-1">
+                                        <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
+	                                        <i class="bi bi-pencil-fill"></i>
+                                        </button>
+                                        <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
+                                            <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>`;
     if (item.IsEditable) {
@@ -114,15 +118,13 @@ function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
     let editedItem = toDoListItems.find(e => e.IsEditable == true);
     if (editedItem !== undefined) {
-        removeClassEditableItem(editedItem.id);
+        removeItem(editedItem.id);
         editedItem.IsEditable = false;
-        renderItemInListGroupItem(editedItem);
+        renderItem(editedItem);
     }
-    let notEditableItem = document.getElementsByClassName(`notEditableItem ${item.id}`)[0];
-    notEditableItem.remove();
-
+    removeItem(item.id);
     item.IsEditable = true;
-    renderItemInListGroupItem(item);
+    renderItem(item);
 }
 
 function saveNameClickHandler(id) {
@@ -136,24 +138,24 @@ function saveNameClickHandler(id) {
     item.name = editedName;
     updateToDoListItem(item);
 
-    removeClassEditableItem(item.id);
+    removeItem(item.id);
     item.IsEditable = false;
-    renderItemInListGroupItem(item);
+    renderItem(item);
 }
 
 function cancelEditClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-    removeClassEditableItem(item.id);
+    removeItem(item.id);
     item.IsEditable = false;
-    renderItemInListGroupItem(item);
+    renderItem(item);
 }
 
-function removeClassEditableItem(id) {
-    let input = document.getElementsByClassName(`editableItem ${id}`)[0];
-    input.remove();
+function removeItem(id) {
+    let item = document.getElementsByClassName(`toDoListItem ${id}`)[0];
+    item.remove();
 }
 
-function renderItemInListGroupItem(item) {
+function renderItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = buildInnerHtml(item);
     li.append();
