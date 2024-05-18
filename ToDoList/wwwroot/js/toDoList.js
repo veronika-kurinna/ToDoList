@@ -2,33 +2,32 @@
 
 getToDoListItems()
     .then(items => {
-        toDoListItems = items;
-        addPropertyToArray(toDoListItems);
+        toDoListItems = mapItems(items);
         renderToDoList(toDoListItems);
     });
 
-function addPropertyToArray(array) {
-    array.forEach(function (item) {
-        item.IsEditable = false;
-    });
+function mapItems(items) {
+    let itemViews = items;
+    items.forEach(item => item.IsEditable = false);
+    return itemViews;
 }
 
 function renderToDoList(items) {
     for (let i = 0; i < items.length; i++) {
-        renderListGroupItem(items[i]);
+        renderToDoListItem(items[i]);
     }
 }
 
-function renderListGroupItem(item) {
+function renderToDoListItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
 
     li.classList.add("list-group-item", item.id);
-    li.innerHTML = renderItem(item);
+    li.innerHTML = buildInnerHtml(item);
     ul.append(li);
 }
 
-function renderItem(item) {
+function buildInnerHtml(item) {
     let editableItem = `<div class="editableItem ${item.id}">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="editItemInput" value="${item.name}">
@@ -69,7 +68,7 @@ function addItemClickHandler() {
     createToDoListItem(newItem)
         .then(item => {
             toDoListItems.push(item);
-            renderListGroupItem(item);
+            renderToDoListItem(item);
         });
 
     input.value = "";
@@ -156,6 +155,6 @@ function removeClassEditableItem(id) {
 
 function renderItemInListGroupItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
-    li.innerHTML = renderItem(item);
+    li.innerHTML = buildInnerHtml(item);
     li.append();
 }
