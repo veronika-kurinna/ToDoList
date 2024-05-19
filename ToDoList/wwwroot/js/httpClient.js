@@ -27,7 +27,7 @@ function createToDoListItem(item) {
         .catch(error => console.log(error.message));
 }
 
- function updateToDoListItem(item) {
+function updateToDoListItem(item) {
     let request = {
         method: "PUT",
         headers: {

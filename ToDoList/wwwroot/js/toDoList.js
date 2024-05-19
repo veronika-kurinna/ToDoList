@@ -80,63 +80,47 @@ function addItemClickHandler() {
 
 function toggleStatusClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-
     if (item.status == statusDone) {
         item.status = statusToDo;
-        updateToDoListItem(item)
-                .then(() => {
-                    removeItem(item.id);
-                    renderItem(item);
-                })
-                .catch(error => console.log(error.message));
     }
     else 
     {
         item.status = statusDone;
-        updateToDoListItem(item)
-                .then(() => {
-                    removeItem(item.id);
-                    renderItem(item);
-                })
-                .catch(error => console.log(error.message));
     }
+
+    updateToDoListItem(item)
+        .then(() => {
+            rerenderItem(item);
+        })
+        .catch(error => console.log(error.message));
 }
 
 function toggleStatusArchivedClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-
     if (item.status == statusArchived) {
         item.status = statusToDo;
-        updateToDoListItem(item)
-            .then(() => {
-                removeItem(item.id);
-                renderItem(item);
-            })
-            .catch(error => console.log(error.message));
     }
     else
     {
         item.status = statusArchived;
-        updateToDoListItem(item)
-            .then(() => {
-                removeItem(item.id);
-                renderItem(item);
-            })
-            .catch(error => console.log(error.message));
     }
+
+    updateToDoListItem(item)
+        .then(() => {
+            rerenderItem(item);
+        })
+        .catch(error => console.log(error.message));
 } 
 
 function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
     let editedItem = toDoListItems.find(e => e.IsEditable == true);
     if (editedItem !== undefined) {
-        removeItem(editedItem.id);
         editedItem.IsEditable = false;
-        renderItem(editedItem);
+        rerenderItem(editedItem);
     }
-    removeItem(item.id);
     item.IsEditable = true;
-    renderItem(item);
+    rerenderItem(item);
 }
 
 function saveNameClickHandler(id) {
@@ -151,25 +135,21 @@ function saveNameClickHandler(id) {
     item.IsEditable = false;
     updateToDoListItem(item)
         .then(() => {
-            removeItem(item.id);
-            renderItem(item);
+            rerenderItem(item);
         })
         .catch(error => console.log(error.message));
 }
 
 function cancelEditClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-    removeItem(item.id);
     item.IsEditable = false;
-    renderItem(item);
+    rerenderItem(item);
 }
 
-function removeItem(id) {
-    let item = document.getElementsByClassName(`toDoListItem ${id}`)[0];
-    item.remove();
-}
+function rerenderItem(item) {
+    let toDoListItem = document.getElementsByClassName(`toDoListItem ${item.id}`)[0];
+    toDoListItem.remove();
 
-function renderItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = buildInnerHtml(item);
     li.append();
