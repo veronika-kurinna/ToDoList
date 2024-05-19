@@ -36,7 +36,7 @@ function updateToDoListItem(item) {
         body: JSON.stringify(item)
     }
 
-    fetch(`${baseUrl}/api/ToDoListItem/Update/${item.id}`, request)
+    return fetch(`${baseUrl}/api/ToDoListItem/Update/${item.id}`, request)
         .catch(error => console.log(error.message));
 }
 
