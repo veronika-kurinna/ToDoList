@@ -81,8 +81,8 @@ function addItemClickHandler() {
 function toggleStatusClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
 
-    if (item.status == statusToDo) {
-        item.status = statusDone;
+    if (item.status == statusDone) {
+        item.status = statusToDo;
         updateToDoListItem(item)
                 .then(() => {
                     removeItem(item.id);
@@ -92,7 +92,7 @@ function toggleStatusClickHandler(id) {
     }
     else 
     {
-        item.status = statusToDo;
+        item.status = statusDone;
         updateToDoListItem(item)
                 .then(() => {
                     removeItem(item.id);
