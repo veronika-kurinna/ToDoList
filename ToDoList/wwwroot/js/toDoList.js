@@ -51,6 +51,9 @@ function buildInnerHtml(item) {
                                         <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
                                             <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
                                         </button>
+                                        <button class="btn btn-outline-secondary" type="button" onclick='deleteToDoListItemClickHandler(${item.id})'>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>`;
@@ -147,4 +150,14 @@ function rerenderItem(item) {
     let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
     li.innerHTML = buildInnerHtml(item);
     li.append();
+}
+
+function deleteToDoListItemClickHandler(id) {
+    deleteToDoListItem(id)
+        .then(() => {
+            let li = document.getElementsByClassName(`list-group-item ${id}`)[0];
+            li.remove();
+            toDoListItems = toDoListItems.filter(item => item.id !== id);
+        })
+        .catch(error => console.log(error.message));
 }
