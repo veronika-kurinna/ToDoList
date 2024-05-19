@@ -80,37 +80,49 @@ function addItemClickHandler() {
 
 function toggleStatusClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-    let label = document.querySelector(".label-" + item.id);
 
     if (item.status == statusToDo) {
-        label.classList.add("strikethrough");
         item.status = statusDone;
-        updateToDoListItem(item);
+        updateToDoListItem(item)
+                .then(() => {
+                    removeItem(item.id);
+                    renderItem(item);
+                })
+                .catch(error => console.log(error.message));
     }
-    else
+    else 
     {
-        label.classList.remove("strikethrough");
         item.status = statusToDo;
-        updateToDoListItem(item);
+        updateToDoListItem(item)
+                .then(() => {
+                    removeItem(item.id);
+                    renderItem(item);
+                })
+                .catch(error => console.log(error.message));
     }
 }
 
 function toggleStatusArchivedClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
-    let icon = document.querySelector(".bi-" + item.id);
 
     if (item.status == statusArchived) {
-        icon.classList.remove("bi-arrow-down-square-fill");
-        icon.classList.add("bi-arrow-up-square-fill");
         item.status = statusToDo;
-        updateToDoListItem(item);
+        updateToDoListItem(item)
+            .then(() => {
+                removeItem(item.id);
+                renderItem(item);
+            })
+            .catch(error => console.log(error.message));
     }
     else
     {
-        icon.classList.remove("bi-arrow-up-square-fill");
-        icon.classList.add("bi-arrow-down-square-fill");
         item.status = statusArchived;
-        updateToDoListItem(item);
+        updateToDoListItem(item)
+            .then(() => {
+                removeItem(item.id);
+                renderItem(item);
+            })
+            .catch(error => console.log(error.message));
     }
 } 
 
@@ -136,11 +148,13 @@ function saveNameClickHandler(id) {
         throw new Error("Item is required");
     }
     item.name = editedName;
-    updateToDoListItem(item);
-
-    removeItem(item.id);
     item.IsEditable = false;
-    renderItem(item);
+    updateToDoListItem(item)
+        .then(() => {
+            removeItem(item.id);
+            renderItem(item);
+        })
+        .catch(error => console.log(error.message));
 }
 
 function cancelEditClickHandler(id) {
