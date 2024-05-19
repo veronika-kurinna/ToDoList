@@ -89,9 +89,7 @@ function toggleStatusClickHandler(id) {
     }
 
     updateToDoListItem(item)
-        .then(() => {
-            rerenderItem(item);
-        })
+        .then(() => rerenderItem(item))
         .catch(error => console.log(error.message));
 }
 
@@ -106,9 +104,7 @@ function toggleStatusArchivedClickHandler(id) {
     }
 
     updateToDoListItem(item)
-        .then(() => {
-            rerenderItem(item);
-        })
+        .then(() => rerenderItem(item))
         .catch(error => console.log(error.message));
 } 
 
@@ -134,9 +130,7 @@ function saveNameClickHandler(id) {
     item.name = editedName;
     item.IsEditable = false;
     updateToDoListItem(item)
-        .then(() => {
-            rerenderItem(item);
-        })
+        .then(() => rerenderItem(item))
         .catch(error => console.log(error.message));
 }
 
