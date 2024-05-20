@@ -40,3 +40,16 @@ function updateToDoListItem(item) {
         .catch(error => console.log(error.message));
 }
 
+function deleteToDoListItem(id) {
+    let request = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(id)
+    }
+
+    return fetch(`${baseUrl}/api/ToDoListItem/Delete/${id}`, request)
+        .catch(error => console.log(error.message));
+}
+
