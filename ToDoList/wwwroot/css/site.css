@@ -6,6 +6,7 @@
     background-color: #37474F;
     display: flex;
     justify-content: center;
+    min-height: 100vh;
 }
 
 .content {
@@ -13,13 +14,13 @@
 }
 
 #brand {
-    color: #0d6efd;
+    color: #FFFFFF;
     padding-top: 40px;
     padding-bottom: 20px;
 }
 
 .list-group {
-    margin-top: 20px;
+    margin-top: 25px;
     padding-bottom: 40px;
 }
 
@@ -31,4 +32,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: black;
 }

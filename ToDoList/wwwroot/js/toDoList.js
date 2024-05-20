@@ -22,16 +22,12 @@ function renderToDoListItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
 
+    li.innerHTML = buildInnerHtml(item);
     if (item.status == statusToDo) {
         li.classList.add("list-group-item", "list-group-item-primary", item.id);
-    } else {
-        li.classList.add("list-group-item", "list-group-item-success", item.id);
-    }
-    li.innerHTML = buildInnerHtml(item);
-
-    if (item.status == statusToDo) {
         ul.insertBefore(li, ul.firstChild);
     } else {
+        li.classList.add("list-group-item", "list-group-item-success", item.id);
         ul.append(li);
     }
 }
