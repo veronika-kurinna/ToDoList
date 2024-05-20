@@ -121,7 +121,7 @@ namespace ToDoListIntegrationTests
             HttpClient client = _factory.CreateClient();
 
             string initialName = "Item Test";
-            ToDoItemStatuses initialStatus = ToDoItemStatuses.Archived;
+            ToDoItemStatuses initialStatus = ToDoItemStatuses.ToDo;
             ToDoListItemEntity item = new ToDoListItemEntity
             {
                 Name = initialName,
@@ -156,7 +156,7 @@ namespace ToDoListIntegrationTests
             HttpClient client = _factory.CreateClient();
 
             string initialName = "Item Test";
-            ToDoItemStatuses initialStatus = ToDoItemStatuses.Done;
+            ToDoItemStatuses initialStatus = ToDoItemStatuses.ToDo;
             ToDoListItemEntity item = new ToDoListItemEntity
             {
                 Name = initialName,
@@ -169,7 +169,7 @@ namespace ToDoListIntegrationTests
 
             UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
             {
-                Status = ToDoItemStatuses.Archived
+                Status = ToDoItemStatuses.Done
             };
             HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{item.Id}");
             requestToUpdate.Content = JsonContent.Create(itemToUpdate);
@@ -205,7 +205,7 @@ namespace ToDoListIntegrationTests
             UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
             {
                 Name = "Updated name",
-                Status = ToDoItemStatuses.Archived
+                Status = ToDoItemStatuses.ToDo
             };
             HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{item.Id}");
             requestToUpdate.Content = JsonContent.Create(itemToUpdate);
@@ -265,7 +265,7 @@ namespace ToDoListIntegrationTests
             UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
             {
                 Name = "Updated name",
-                Status = ToDoItemStatuses.Archived
+                Status = ToDoItemStatuses.Done
             };
             HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{id}");
             requestToUpdate.Content = JsonContent.Create(itemToUpdate);
@@ -287,7 +287,7 @@ namespace ToDoListIntegrationTests
             UpdateToDoItemRequest itemToUpdate = new UpdateToDoItemRequest()
             {
                 Name = "Updated name",
-                Status = ToDoItemStatuses.Archived
+                Status = ToDoItemStatuses.Done
             };
             HttpRequestMessage requestToUpdate = new HttpRequestMessage(HttpMethod.Put, $"api/ToDoListItem/Update/{id}");
             requestToUpdate.Content = JsonContent.Create(itemToUpdate);

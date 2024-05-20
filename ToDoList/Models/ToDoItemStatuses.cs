@@ -3,7 +3,6 @@
     public enum ToDoItemStatuses
     {
         ToDo,
-        Done,
-        Archived
+        Done
     }
 }
