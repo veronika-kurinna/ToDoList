@@ -48,9 +48,6 @@ function buildInnerHtml(item) {
                                         <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
 	                                        <i class="bi bi-pencil-fill"></i>
                                         </button>
-                                        <button class="btn btn-outline-secondary" type="button" onclick='toggleStatusArchivedClickHandler(${item.id})'>
-                                            <i class="bi-${item.id} ${item.status == statusArchived ? 'bi-arrow-down-square-fill' : 'bi-arrow-up-square-fill'}"></i>
-                                        </button>
                                         <button class="btn btn-outline-secondary" type="button" onclick='deleteToDoListItemClickHandler(${item.id})'>
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
@@ -95,21 +92,6 @@ function toggleStatusClickHandler(id) {
         .then(() => rerenderItem(item))
         .catch(error => console.log(error.message));
 }
-
-function toggleStatusArchivedClickHandler(id) {
-    let item = toDoListItems.find(e => e.id == id);
-    if (item.status == statusArchived) {
-        item.status = statusToDo;
-    }
-    else
-    {
-        item.status = statusArchived;
-    }
-
-    updateToDoListItem(item)
-        .then(() => rerenderItem(item))
-        .catch(error => console.log(error.message));
-} 
 
 function editNameClickHandler(id) {
     let item = toDoListItems.find(e => e.id == id);
