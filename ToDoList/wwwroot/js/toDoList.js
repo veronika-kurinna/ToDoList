@@ -23,9 +23,9 @@ function renderToDoListItem(item) {
     let li = document.createElement("li");
 
     if (item.status == statusToDo) {
-        li.classList.add("list-group-item", "list-group-item-success", item.id);
-    } else {
         li.classList.add("list-group-item", "list-group-item-primary", item.id);
+    } else {
+        li.classList.add("list-group-item", "list-group-item-success", item.id);
     }
     li.innerHTML = buildInnerHtml(item);
 
