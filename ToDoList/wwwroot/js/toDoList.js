@@ -22,9 +22,14 @@ function renderToDoListItem(item) {
     let ul = document.querySelector("#toDoList");
     let li = document.createElement("li");
 
-    li.classList.add("list-group-item", item.id);
     li.innerHTML = buildInnerHtml(item);
-    ul.append(li);
+    if (item.status == statusToDo) {
+        li.classList.add("list-group-item", "list-group-item-primary", item.id);
+        ul.insertBefore(li, ul.firstChild);
+    } else {
+        li.classList.add("list-group-item", "list-group-item-success", item.id);
+        ul.append(li);
+    }
 }
 
 function buildInnerHtml(item) {
@@ -32,7 +37,7 @@ function buildInnerHtml(item) {
                             <div class="editableItem">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="editItemInput" value="${item.name}">
-                                    <button class="btn btn-secondary" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
+                                    <button class="btn btn-dark" type="button" onclick='cancelEditClickHandler(${item.id})'>Cancel</button>
                                     <button class="btn btn-primary" type="button" onclick='saveNameClickHandler(${item.id})'>Save</button>
                                 </div>
                             </div>
@@ -45,10 +50,10 @@ function buildInnerHtml(item) {
                                         <label class="label-${item.id} ${item.status == statusDone ? 'strikethrough' : ''}">${item.name}</label>
                                     </div>
                                     <div class="btn-group me-1">
-                                        <button class="btn btn-outline-secondary" type="button" onclick='editNameClickHandler(${item.id})'>
+                                        <button class="btn btn-outline-dark" type="button" onclick='editNameClickHandler(${item.id})'>
 	                                        <i class="bi bi-pencil-fill"></i>
                                         </button>
-                                        <button class="btn btn-outline-secondary" type="button" onclick='deleteToDoListItemClickHandler(${item.id})'>
+                                        <button class="btn btn-outline-dark" type="button" onclick='deleteToDoListItemClickHandler(${item.id})'>
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
@@ -89,7 +94,11 @@ function toggleStatusClickHandler(id) {
     }
 
     updateToDoListItem(item)
-        .then(() => rerenderItem(item))
+        .then(() => {
+            let li = document.getElementsByClassName(`list-group-item ${item.id}`)[0];
+            li.remove();
+            renderToDoListItem(item);
+        })
         .catch(error => console.log(error.message));
 }
 
