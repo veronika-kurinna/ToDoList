@@ -18,6 +18,8 @@ namespace ToDoList.Data.Repositories
 
         public async Task<IEnumerable<ToDoListItem>> Get()
         {
+            Console.WriteLine("test2");
+
             IEnumerable<ToDoListItemEntity> items = await _context.ToDoListItems.ToListAsync();
             return items.Select(item => _mapper.MapToModel(item));
         }

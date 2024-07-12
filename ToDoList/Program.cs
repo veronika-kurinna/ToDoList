@@ -61,7 +61,7 @@ namespace ToDoList
                 db.Database.Migrate();
             }
 
-            Console.WriteLine("test2");
+            Console.WriteLine();
             app.Run();
         }
     }
